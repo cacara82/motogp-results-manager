@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="CompetitorProfileEndpointType">
+    <xs:all>
+      <xs:element type="competitorType" name="competitor" minOccurs="0"/>
+      <xs:element type="infoType" name="info" minOccurs="0"/>
+      <xs:element type="CompetitorProfileTeamsType" name="teams" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="generated_at" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="competitorType">
+    <xs:attribute name="abbreviation" type="xs:string"/>
+    <xs:attribute name="country_code" type="xs:string"/>
+    <xs:attribute name="gender" type="xs:string"/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="nationality" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="infoType">
+    <xs:attribute name="back_wing_color" type="xs:string"/>
+    <xs:attribute name="chief_engineer" type="xs:string"/>
+    <xs:attribute name="country" type="xs:string"/>
+    <xs:attribute name="country_code_of_residence" type="xs:string"/>
+    <xs:attribute name="country_of_residence" type="xs:string"/>
+    <xs:attribute name="country_of_residence_id" type="xs:string"/>
+    <xs:attribute name="date_of_birth" type="xs:string"/>
+    <xs:attribute name="debut" type="xs:string"/>
+    <xs:attribute name="first_points" type="xs:string"/>
+    <xs:attribute name="first_pole" type="xs:string"/>
+    <xs:attribute name="first_victory" type="xs:string"/>
+    <xs:attribute name="foundation_year" type="xs:string"/>
+    <xs:attribute name="front_color" type="xs:string"/>
+    <xs:attribute name="front_wing_color" type="xs:string"/>
+    <xs:attribute name="height" type="xs:string"/>
+    <xs:attribute name="location" type="xs:string"/>
+    <xs:attribute name="middle_back_center_color" type="xs:string"/>
+    <xs:attribute name="middle_back_sides_color" type="xs:string"/>
+    <xs:attribute name="middle_sides_color" type="xs:string"/>
+    <xs:attribute name="place_of_birth" type="xs:string"/>
+    <xs:attribute name="place_of_birth_id" type="xs:string"/>
+    <xs:attribute name="president" type="xs:string"/>
+    <xs:attribute name="salary" type="xs:string"/>
+    <xs:attribute name="sports_director" type="xs:string"/>
+    <xs:attribute name="technical_director" type="xs:string"/>
+    <xs:attribute name="url_official" type="xs:string"/>
+    <xs:attribute name="url_other" type="xs:string"/>
+    <xs:attribute name="vehicle_chassis" type="xs:string"/>
+    <xs:attribute name="vehicle_construction_year" type="xs:string"/>
+    <xs:attribute name="vehicle_tyres" type="xs:string"/>
+    <xs:attribute name="weight" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="teamType">
+    <xs:attribute name="abbreviation" type="xs:string"/>
+    <xs:attribute name="country_code" type="xs:string"/>
+    <xs:attribute name="gender" type="xs:string"/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="nationality" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="CompetitorProfileTeamsType">
+    <xs:sequence>
+      <xs:element type="teamType" name="team" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompetitorMergeMappingsEndpointType">
+    <xs:sequence>
+      <xs:element type="MergeMappingType" name="mapping" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="generated_at" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="MergeMappingType">
+    <xs:attribute name="merged_id" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="retained_id" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="StageRankingsEndpointType">
+    <xs:sequence>
+      <xs:element type="rankingType" name="ranking" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="generated_at" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="rankingType">
+    <xs:all>
+      <xs:element type="competitor_rankingsType" name="competitor_rankings" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="points" type="xs:integer"/>
+    <xs:attribute name="ranking_movement" type="xs:integer"/>
+    <xs:attribute name="type_id" type="xs:integer"/>
+  </xs:complexType>
+  <xs:complexType name="competitor_rankingType">
+    <xs:all>
+      <xs:element type="competitorType" name="competitor" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="points" type="xs:integer"/>
+    <xs:attribute name="rank" type="xs:integer"/>
+    <xs:attribute name="ranking_movement" type="xs:integer"/>
+  </xs:complexType>
+  <xs:complexType name="competitor_rankingsType">
+    <xs:sequence>
+      <xs:element type="competitor_rankingType" name="competitor_ranking" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StageSeasonsEndpointType">
+    <xs:sequence>
+      <xs:element type="stageType" name="stage" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="generated_at" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="stageType">
+    <xs:all>
+      <xs:element type="categoryType" name="category" minOccurs="0"/>
+      <xs:element type="sportType" name="sport" minOccurs="0"/>
+      <xs:element type="venueType" name="venue" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="air_temperature" type="xs:integer"/>
+    <xs:attribute name="circuit" type="xs:string"/>
+    <xs:attribute name="description" type="xs:string"/>
+    <xs:attribute name="disabled" type="xs:boolean"/>
+    <xs:attribute name="humidity" type="xs:integer"/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="laps" type="xs:integer"/>
+    <xs:attribute name="laps_completed" type="xs:integer"/>
+    <xs:attribute name="pit_open" type="xs:boolean"/>
+    <xs:attribute name="rounds_completed" type="xs:integer"/>
+    <xs:attribute name="scheduled" type="xs:string"/>
+    <xs:attribute name="scheduled_end" type="xs:string"/>
+    <xs:attribute name="single_event" type="xs:boolean"/>
+    <xs:attribute name="status" type="xs:string"/>
+    <xs:attribute name="track_temperature" type="xs:integer"/>
+    <xs:attribute name="type" type="xs:string"/>
+    <xs:attribute name="unique_stage_id" type="xs:string"/>
+    <xs:attribute name="weather" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="categoryType">
+    <xs:attribute name="country_code" type="xs:string"/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="sportType">
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="venueType">
+    <xs:attribute name="capacity" type="xs:integer"/>
+    <xs:attribute name="city" type="xs:string"/>
+    <xs:attribute name="coordinates" type="xs:string"/>
+    <xs:attribute name="country" type="xs:string"/>
+    <xs:attribute name="country_code" type="xs:string"/>
+    <xs:attribute name="curves_left" type="xs:integer"/>
+    <xs:attribute name="curves_right" type="xs:integer"/>
+    <xs:attribute name="debut" type="xs:integer"/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="laps" type="xs:integer"/>
+    <xs:attribute name="length" type="xs:integer"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="timezone" type="xs:string"/>
+    <xs:attribute name="url_official" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="SeasonsDeletedStagesEndpointType">
+    <xs:sequence>
+      <xs:element type="stageType" name="stage" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="generated_at" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="StageProbabilitiesEndpointType">
+    <xs:all>
+      <xs:element type="probabilitiesType" name="probabilities" minOccurs="0"/>
+      <xs:element type="StageWithParentsType" name="stage" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="generated_at" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="probabilitiesType">
+    <xs:all>
+      <xs:element type="marketsType" name="markets" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="ProbabilityMarketType">
+    <xs:all>
+      <xs:element type="outcomesType" name="outcomes" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="description" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="type" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ProbabilityOutcomeType">
+    <xs:all>
+      <xs:element type="competitorType" name="competitor" minOccurs="0"/>
+      <xs:element type="teamType" name="team" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="probability" type="xs:float"/>
+  </xs:complexType>
+  <xs:complexType name="outcomesType">
+    <xs:sequence>
+      <xs:element type="ProbabilityOutcomeType" name="outcome" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="marketsType">
+    <xs:sequence>
+      <xs:element type="ProbabilityMarketType" name="market" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StageWithParentsType">
+    <xs:all>
+      <xs:element type="categoryType" name="category" minOccurs="0"/>
+      <xs:element type="StageParentsType" name="parents" minOccurs="0"/>
+      <xs:element type="sportType" name="sport" minOccurs="0"/>
+      <xs:element type="venueType" name="venue" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="air_temperature" type="xs:integer"/>
+    <xs:attribute name="circuit" type="xs:string"/>
+    <xs:attribute name="description" type="xs:string"/>
+    <xs:attribute name="disabled" type="xs:boolean"/>
+    <xs:attribute name="humidity" type="xs:integer"/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="laps" type="xs:integer"/>
+    <xs:attribute name="laps_completed" type="xs:integer"/>
+    <xs:attribute name="pit_open" type="xs:boolean"/>
+    <xs:attribute name="rounds_completed" type="xs:integer"/>
+    <xs:attribute name="scheduled" type="xs:string"/>
+    <xs:attribute name="scheduled_end" type="xs:string"/>
+    <xs:attribute name="single_event" type="xs:boolean"/>
+    <xs:attribute name="status" type="xs:string"/>
+    <xs:attribute name="track_temperature" type="xs:integer"/>
+    <xs:attribute name="type" type="xs:string"/>
+    <xs:attribute name="unique_stage_id" type="xs:string"/>
+    <xs:attribute name="weather" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="StageParentsType">
+    <xs:sequence>
+      <xs:element type="StageWithParentsType" name="stage" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StagesEndpointType">
+    <xs:sequence>
+      <xs:element type="StageWithChildrenType" name="stage" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="generated_at" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="StageWithChildrenType">
+    <xs:all>
+      <xs:element type="categoryType" name="category" minOccurs="0"/>
+      <xs:element type="sportType" name="sport" minOccurs="0"/>
+      <xs:element type="StageChildrenType" name="stages" minOccurs="0"/>
+      <xs:element type="venueType" name="venue" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="air_temperature" type="xs:integer"/>
+    <xs:attribute name="circuit" type="xs:string"/>
+    <xs:attribute name="description" type="xs:string"/>
+    <xs:attribute name="disabled" type="xs:boolean"/>
+    <xs:attribute name="humidity" type="xs:integer"/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="laps" type="xs:integer"/>
+    <xs:attribute name="laps_completed" type="xs:integer"/>
+    <xs:attribute name="pit_open" type="xs:boolean"/>
+    <xs:attribute name="rounds_completed" type="xs:integer"/>
+    <xs:attribute name="scheduled" type="xs:string"/>
+    <xs:attribute name="scheduled_end" type="xs:string"/>
+    <xs:attribute name="single_event" type="xs:boolean"/>
+    <xs:attribute name="status" type="xs:string"/>
+    <xs:attribute name="track_temperature" type="xs:integer"/>
+    <xs:attribute name="type" type="xs:string"/>
+    <xs:attribute name="unique_stage_id" type="xs:string"/>
+    <xs:attribute name="weather" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="StageChildrenType">
+    <xs:sequence>
+      <xs:element type="StageWithChildrenType" name="stage" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StageSummaryEndpointType">
+    <xs:all>
+      <xs:element type="StageSummaryType" name="stage" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="generated_at" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="StageSummaryType">
+    <xs:all>
+      <xs:element type="categoryType" name="category" minOccurs="0"/>
+      <xs:element type="StageCompetitorsType" name="competitors" minOccurs="0"/>
+      <xs:element type="StageParentsType" name="parents" minOccurs="0"/>
+      <xs:element type="sportType" name="sport" minOccurs="0"/>
+      <xs:element type="StageChildrenType" name="stages" minOccurs="0"/>
+      <xs:element type="StageTeamsType" name="teams" minOccurs="0"/>
+      <xs:element type="venueType" name="venue" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="air_temperature" type="xs:integer"/>
+    <xs:attribute name="circuit" type="xs:string"/>
+    <xs:attribute name="description" type="xs:string"/>
+    <xs:attribute name="disabled" type="xs:boolean"/>
+    <xs:attribute name="humidity" type="xs:integer"/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="laps" type="xs:integer"/>
+    <xs:attribute name="laps_completed" type="xs:integer"/>
+    <xs:attribute name="pit_open" type="xs:boolean"/>
+    <xs:attribute name="rounds_completed" type="xs:integer"/>
+    <xs:attribute name="scheduled" type="xs:string"/>
+    <xs:attribute name="scheduled_end" type="xs:string"/>
+    <xs:attribute name="single_event" type="xs:boolean"/>
+    <xs:attribute name="status" type="xs:string"/>
+    <xs:attribute name="track_temperature" type="xs:integer"/>
+    <xs:attribute name="type" type="xs:string"/>
+    <xs:attribute name="unique_stage_id" type="xs:string"/>
+    <xs:attribute name="weather" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="StageCompetitorType">
+    <xs:all>
+      <xs:element type="StageCompetitorResultType" name="result" minOccurs="0"/>
+      <xs:element type="teamType" name="team" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="country_code" type="xs:string"/>
+    <xs:attribute name="gender" type="xs:string"/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="nationality" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="StageCompetitorResultType">
+    <xs:attribute name="bike_number" type="xs:integer"/>
+    <xs:attribute name="dnf" type="xs:boolean"/>
+    <xs:attribute name="dns" type="xs:boolean"/>
+    <xs:attribute name="dsq" type="xs:boolean"/>
+    <xs:attribute name="fastest_lap_time" type="xs:string"/>
+    <xs:attribute name="fastest_laps" type="xs:integer"/>
+    <xs:attribute name="gap" type="xs:string"/>
+    <xs:attribute name="grid" type="xs:integer"/>
+    <xs:attribute name="laps" type="xs:integer"/>
+    <xs:attribute name="pitstop_count" type="xs:integer"/>
+    <xs:attribute name="podiums" type="xs:integer"/>
+    <xs:attribute name="points" type="xs:integer"/>
+    <xs:attribute name="pole_positions" type="xs:integer"/>
+    <xs:attribute name="position" type="xs:float"/>
+    <xs:attribute name="races" type="xs:integer"/>
+    <xs:attribute name="races_with_points" type="xs:integer"/>
+    <xs:attribute name="speed" type="xs:string"/>
+    <xs:attribute name="status" type="xs:string"/>
+    <xs:attribute name="time" type="xs:string"/>
+    <xs:attribute name="victories" type="xs:integer"/>
+    <xs:attribute name="victory_pole_and_fastest_lap" type="xs:integer"/>
+  </xs:complexType>
+  <xs:complexType name="StageCompetitorsType">
+    <xs:sequence>
+      <xs:element type="StageCompetitorType" name="competitor" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StageTeamType">
+    <xs:all>
+      <xs:element type="StageSummaryTeamCompetitorsType" name="competitors" minOccurs="0"/>
+      <xs:element type="StageCompetitorResultType" name="result" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="country_code" type="xs:string"/>
+    <xs:attribute name="gender" type="xs:string"/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="nationality" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="StageSummaryTeamCompetitorsType">
+    <xs:sequence>
+      <xs:element type="StageCompetitorType" name="competitor" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StageTeamsType">
+    <xs:sequence>
+      <xs:element type="StageTeamType" name="team" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TeamProfileEndpointType">
+    <xs:all>
+      <xs:element type="TeamProfileCompetitorsType" name="competitors" minOccurs="0"/>
+      <xs:element type="infoType" name="info" minOccurs="0"/>
+      <xs:element type="teamType" name="team" minOccurs="0"/>
+    </xs:all>
+    <xs:attribute name="generated_at" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="TeamProfileCompetitorsType">
+    <xs:sequence>
+      <xs:element type="StageCompetitorType" name="competitor" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

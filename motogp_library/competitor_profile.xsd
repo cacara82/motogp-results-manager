@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.sportradar.com/sportsapi/v1/motogp" xmlns="http://schemas.sportradar.com/sportsapi/v1/motogp" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="../../includes/motogp/competitor.xsd" />
+    <xs:include schemaLocation="../../includes/motogp/team.xsd" />
+    <xs:include schemaLocation="../../includes/motogp/info.xsd" />
+    <xs:element name="competitor_profile" type="genericCompetitorProfile" />
+    <xs:complexType name="genericCompetitorProfile">
+        <xs:sequence>
+            <xs:element type="competitorType" name="competitor" minOccurs="0" maxOccurs="1" />
+            <xs:element type="competitorProfileTeamsType" name="teams" minOccurs="0" maxOccurs="1" />
+            <xs:element type="infoType" name="info" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute type="xs:dateTime" name="generated_at"/>
+    </xs:complexType>
+    <xs:complexType name="competitorProfileTeamsType">
+        <xs:sequence>
+            <xs:element type="teamType" name="team" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute type="xs:dateTime" name="generated_at"/>
+    </xs:complexType>
+</xs:schema>
