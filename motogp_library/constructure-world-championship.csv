@@ -1,0 +1,285 @@
+Season,Constructor,Class
+2021,Yamaha,MotoGP™
+2021,Kalex,Moto2™
+2021,KTM,Moto3™
+2021,Energica,MotoE™
+2020,Suzuki,MotoGP™
+2020,Kalex,Moto2™
+2020,KTM,Moto3™
+2020,Energica,MotoE™
+2019,Honda,MotoGP™
+2019,Kalex,Moto2™
+2019,Honda,Moto3™
+2019,Energica,MotoE™
+2018,Honda,MotoGP™
+2018,Kalex,Moto2™
+2018,Honda,Moto3™
+2017,Honda,MotoGP™
+2017,Kalex,Moto2™
+2017,Honda,Moto3™
+2016,Honda,MotoGP™
+2016,Kalex,Moto2™
+2016,KTM,Moto3™
+2015,Yamaha,MotoGP™
+2015,Kalex,Moto2™
+2015,Honda,Moto3™
+2014,Honda,MotoGP™
+2014,Kalex,Moto2™
+2014,Honda,Moto3™
+2013,Honda,MotoGP™
+2013,Kalex,Moto2™
+2013,KTM,Moto3™
+2012,Yamaha,MotoGP™
+2012,Suter,Moto2™
+2012,KTM,Moto3™
+2011,Honda,MotoGP™
+2011,Kalex,Moto2™
+2011,Aprilia,125cc
+2010,Yamaha,MotoGP™
+2010,Moriwaki,Moto2™
+2010,Derbi,125cc
+2009,Yamaha,MotoGP™
+2009,Honda,250cc
+2009,Aprilia,125cc
+2008,Yamaha,MotoGP™
+2008,Gilera,250cc
+2008,Derbi,125cc
+2007,Ducati,MotoGP™
+2007,Aprilia,250cc
+2007,Aprilia,125cc
+2006,Honda,MotoGP™
+2006,Aprilia,250cc
+2006,Aprilia,125cc
+2005,Yamaha,MotoGP™
+2005,Honda,250cc
+2005,Honda,125cc
+2004,Yamaha,MotoGP™
+2004,Honda,250cc
+2004,Honda,125cc
+2003,Honda,MotoGP™
+2003,Aprilia,250cc
+2003,Honda,125cc
+2002,Honda,MotoGP™
+2002,Aprilia,250cc
+2002,Aprilia,125cc
+2001,Honda,MotoGP™
+2001,Honda,250cc
+2001,Gilera,125cc
+2000,Suzuki,MotoGP™
+2000,Yamaha,250cc
+2000,Aprilia,125cc
+1999,Honda,MotoGP™
+1999,Aprilia,250cc
+1999,Honda,125cc
+1998,Honda,MotoGP™
+1998,Aprilia,250cc
+1998,Honda,125cc
+1997,Honda,MotoGP™
+1997,Honda,250cc
+1997,Aprilia,125cc
+1996,Honda,MotoGP™
+1996,Aprilia,250cc
+1996,Honda,125cc
+1995,Honda,MotoGP™
+1995,Aprilia,250cc
+1995,Honda,125cc
+1994,Honda,MotoGP™
+1994,Aprilia,250cc
+1994,Aprilia,125cc
+1993,Suzuki,MotoGP™
+1993,Yamaha,250cc
+1993,Honda,125cc
+1992,Yamaha,MotoGP™
+1992,Honda,250cc
+1992,Aprilia,125cc
+1991,Yamaha,MotoGP™
+1991,Honda,250cc
+1991,Honda,125cc
+1990,Yamaha,MotoGP™
+1990,Yamaha,250cc
+1990,Honda,125cc
+1989,Honda,MotoGP™
+1989,Honda,250cc
+1989,JJ Cobas,125cc
+1989,Derbi,80cc
+1988,Yamaha,MotoGP™
+1988,Honda,250cc
+1988,Derbi,125cc
+1988,Derbi,80cc
+1987,Honda,MotoGP™
+1987,Honda,250cc
+1987,Garelli,125cc
+1987,Derbi,80cc
+1986,Yamaha,MotoGP™
+1986,Yamaha,250cc
+1986,Garelli,125cc
+1986,Derbi,80cc
+1985,Honda,MotoGP™
+1985,Honda,250cc
+1985,Garelli,125cc
+1985,Krauser,80cc
+1984,Yamaha,MotoGP™
+1984,Chevallier,250cc
+1984,Garelli,125cc
+1984,Zundapp,80cc
+1983,Honda,MotoGP™
+1983,Yamaha,250cc
+1983,Garelli,125cc
+1983,Krauser,50cc
+1982,Suzuki,MotoGP™
+1982,Yamaha,250cc
+1982,Garelli,125cc
+1982,Kawasaki,350cc
+1982,Kreidler,50cc
+1981,Suzuki,MotoGP™
+1981,Kawasaki,250cc
+1981,Minarelli,125cc
+1981,Kawasaki,350cc
+1981,Motul Bultaco,50cc
+1980,Yamaha,MotoGP™
+1980,Kawasaki,250cc
+1980,MBA,125cc
+1980,Bimota-Yamaha,350cc
+1980,Kreidler Van Veen,50cc
+1979,Yamaha,MotoGP™
+1979,Kawasaki,250cc
+1979,Minarelli,125cc
+1979,Kawasaki,350cc
+1979,Kreidler,50cc
+1978,Yamaha,MotoGP™
+1978,Kawasaki,250cc
+1978,MBA,125cc
+1978,Kawasaki,350cc
+1978,Bultaco,50cc
+1977,Suzuki,MotoGP™
+1977,Morbidelli,250cc
+1977,Morbidelli,125cc
+1977,Yamaha,350cc
+1977,Bultaco,50cc
+1976,Suzuki,MotoGP™
+1976,Harley Davidson,250cc
+1976,Morbidelli,125cc
+1976,Harley Davidson,350cc
+1976,Bultaco,50cc
+1975,Yamaha,MotoGP™
+1975,Harley Davidson,250cc
+1975,Morbidelli,125cc
+1975,Yamaha,350cc
+1975,Kreidler,50cc
+1974,MV Agusta,MotoGP™
+1974,Harley Davidson,250cc
+1974,Yamaha,125cc
+1974,Yamaha,350cc
+1974,Van Veen-Kreidler,50cc
+1973,MV Agusta,MotoGP™
+1973,Yamaha,250cc
+1973,Yamaha,125cc
+1973,MV Agusta,350cc
+1973,Kreidler,50cc
+1972,Honda,MotoGP™
+1972,Yamaha,250cc
+1972,Derbi,125cc
+1972,MV Agusta,350cc
+1972,Kreidler,50cc
+1971,MV Agusta,MotoGP™
+1971,Yamaha,250cc
+1971,Derbi,125cc
+1971,MV Agusta,350cc
+1971,Kreidler,50cc
+1970,MV Agusta,MotoGP™
+1970,Yamaha,250cc
+1970,Suzuki,125cc
+1970,Benelli,350cc
+1970,Derbi,50cc
+1969,MV Agusta,MotoGP™
+1969,Benelli,250cc
+1969,Kawasaki,125cc
+1969,MV Agusta,350cc
+1969,Derbi,50cc
+1968,MV Agusta,MotoGP™
+1968,Yamaha,250cc
+1968,Yamaha,125cc
+1968,MV Agusta,350cc
+1968,Suzuki,50cc
+1967,Honda,MotoGP™
+1967,Honda,250cc
+1967,Yamaha,125cc
+1967,Honda,350cc
+1967,Suzuki,50cc
+1966,MV Agusta,MotoGP™
+1966,Honda,250cc
+1966,Honda,125cc
+1966,Honda,350cc
+1966,Suzuki,50cc
+1965,MV Agusta,MotoGP™
+1965,Yamaha,250cc
+1965,Suzuki,125cc
+1965,Honda,350cc
+1965,Honda,50cc
+1964,MV Agusta,MotoGP™
+1964,Yamaha,250cc
+1964,Honda,125cc
+1964,Honda,350cc
+1964,Suzuki,50cc
+1963,MV Agusta,MotoGP™
+1963,Honda,250cc
+1963,Suzuki,125cc
+1963,Honda,350cc
+1963,Suzuki,50cc
+1962,MV Agusta,MotoGP™
+1962,Honda,250cc
+1962,Honda,125cc
+1962,Honda,350cc
+1962,Suzuki,50cc
+1961,MV Agusta,MotoGP™
+1961,Honda,250cc
+1961,Honda,125cc
+1961,MV Agusta,350cc
+1960,MV Agusta,MotoGP™
+1960,MV Agusta,250cc
+1960,MV Agusta,125cc
+1960,MV Agusta,350cc
+1959,MV Agusta,MotoGP™
+1959,MV Agusta,250cc
+1959,MV Agusta,125cc
+1959,MV Agusta,350cc
+1958,MV Agusta,MotoGP™
+1958,MV Agusta,250cc
+1958,MV Agusta,125cc
+1958,MV Agusta,350cc
+1957,Gilera,MotoGP™
+1957,Mondial,250cc
+1957,Mondial,125cc
+1957,Moto Guzzi,350cc
+1956,MV Agusta,MotoGP™
+1956,MV Agusta,250cc
+1956,MV Agusta,125cc
+1956,Moto Guzzi,350cc
+1955,Gilera,MotoGP™
+1955,NSU,250cc
+1955,MV Agusta,125cc
+1955,Moto Guzzi,350cc
+1954,Gilera,MotoGP™
+1954,NSU,250cc
+1954,NSU,125cc
+1954,Moto Guzzi,350cc
+1953,Gilera,MotoGP™
+1953,NSU,250cc
+1953,NSU,125cc
+1953,Moto Guzzi,350cc
+1952,Gilera,MotoGP™
+1952,Moto Guzzi,250cc
+1952,MV Agusta,125cc
+1952,Norton,350cc
+1951,Norton,MotoGP™
+1951,Moto Guzzi,250cc
+1951,Mondial,125cc
+1951,Norton,350cc
+1950,Gilera,MotoGP™
+1950,Benelli,250cc
+1950,Mondial,125cc
+1950,Velocette,350cc
+1949,AJS,MotoGP™
+1949,Moto Guzzi,250cc
+1949,Mondial,125cc
+1949,Velocette,350cc
