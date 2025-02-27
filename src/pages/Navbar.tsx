@@ -1,4 +1,3 @@
-import React from 'react';
 import { Layout, Button, Space } from 'antd';
 import { HomeOutlined, InfoCircleOutlined, ThunderboltOutlined } from '@ant-design/icons';
 

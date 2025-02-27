@@ -1,45 +1,37 @@
 import { Layout } from 'antd';
-import { GithubOutlined, LinkedinOutlined, TwitterOutlined, MailOutlined } from '@ant-design/icons';
-import './Footer.css';
+import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
 
 const { Footer: AntFooter } = Layout;
 
 export default function Footer() {
   return (
-    <AntFooter className="app-footer">
-      <div className="footer-container">
-        {/* Bloque 1: Copyright */}
-        <div className="footer-section footer-copyright">
-          Carlos Carvajal Ramos ©2025 - Creado con React + Vite + Ant Design
+    <footer className="bg-gray-800 text-white py-6 mt-auto">
+      <div className="container mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
+        <div className="mb-4 sm:mb-0">
+          <p>Carlos Carvajal Ramos © 2025</p>
         </div>
-
-        {/* Bloque 2: Enlaces */}
-        <div className="footer-section footer-links">
-          <a href="#">Inicio</a>
-          <a href="#">Servicios</a>
-          <a href="#">Proyectos</a>
-          <a href="#">Sobre mí</a>
+        
+        <div className="mb-4 sm:mb-0 flex space-x-4">
+          <a href="#" className="text-white hover:text-red-400 transition-colors">Home</a>
+          <a href="#" className="text-white hover:text-red-400 transition-colors">About</a>
+          <a href="#" className="text-white hover:text-red-400 transition-colors">Socials</a>
         </div>
-
-        {/* Bloque 3: Redes Sociales */}
-        <div className="footer-section footer-social">
-          <span>Contacto</span>
-          <div className="social-icons">
-            <a href="https://github.com/tucuenta" target="_blank" rel="noreferrer">
-              <GithubOutlined />
+        
+        <div>
+          <p className="mb-2 text-center">Contact</p>
+          <div className="flex space-x-4 justify-center">
+            <a href="https://github.com/cacara82" target="_blank" rel="noreferrer" className="text-white hover:text-red-400 transition-colors">
+              <span className="text-xl"><GithubOutlined /></span>
             </a>
-            <a href="https://linkedin.com/in/tucuenta" target="_blank" rel="noreferrer">
-              <LinkedinOutlined />
+            <a href="https://www.linkedin.com/in/carlos-carvajal-ramos-709290213/" target="_blank" rel="noreferrer" className="text-white hover:text-red-400 transition-colors">
+              <span className="text-xl"><LinkedinOutlined /></span>
             </a>
-            <a href="https://twitter.com/tucuenta" target="_blank" rel="noreferrer">
-              <TwitterOutlined />
-            </a>
-            <a href="mailto:tu@email.com">
-              <MailOutlined />
+            <a href="mailto:cacara890@gmail.com" target="_blank" rel="noreferrer" className="text-white hover:text-red-400 transition-colors">
+              <span className="text-xl"><MailOutlined /></span>
             </a>
           </div>
         </div>
       </div>
-    </AntFooter>
+    </footer>
   );
 }
