@@ -1,7 +1,4 @@
-import { Layout } from 'antd';
 import { GithubOutlined, LinkedinOutlined, MailOutlined } from '@ant-design/icons';
-
-const { Footer: AntFooter } = Layout;
 
 export default function Footer() {
   return (
