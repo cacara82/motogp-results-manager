@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import pandas as pd
+import pandas as pd # type: ignore
 import utils
 
 app = FastAPI(title="MotoGP Optimized API")

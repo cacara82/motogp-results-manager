@@ -6,7 +6,7 @@ authors = ["cacara82 <cacara890@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.10"
 kagglehub = "^0.3.10"
 fastapi = {extras = ["standard"], version = "^0.115.11"}
 pandas = "^2.2.3"
