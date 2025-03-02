@@ -27,6 +27,13 @@ def download_dataset():
     print(f"Files downloaded and moved to {save_path}")
     return save_path
 
-
-
-download_dataset()
+def format_rider_name(name: str) -> str:
+    """
+    Formats the rider name from the format "SURNAME Name" to
+    "Name Surname"
+        :return: The string of the name formatted
+    """
+    parts = name.split()
+    if len(parts) > 1 and parts[0].isupper():
+        return f"{parts[1].capitalize()} {parts[0].capitalize()}"
+    return name.title()
