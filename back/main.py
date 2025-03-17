@@ -5,9 +5,9 @@ import pandas as pd
 import numpy as np
 import utils
 
-app = FastAPI(title="MotoGP Optimized API")
+app = FastAPI(title="MotoGP Kagglehub API")
 
-# Configurar CORS
+# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -16,41 +16,46 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Cargar datasets
+# Download/load datasets each time
 try:
-    utils.download_dataset()
+    utils.download_dataset() # if already downloaded will skip them
     riders_info_df = pd.read_csv("./data/riders-info.csv")
     riders_positions_df = pd.read_csv("./data/riders-finishing-positions.csv")
     races_winners_df = pd.read_csv("./data/grand-prix-race-winners.csv")
     circuits_df = pd.read_csv("./data/grand-prix-events-held.csv").rename(columns={"Track": "Circuit", "Times": "GPs_Held"})
     constructors_df = pd.read_csv("./data/constructure-world-championship.csv")
 except Exception as e:
-    raise RuntimeError(f"Error cargando archivos CSV: {e}")
+    raise RuntimeError(f"Error loading files: {e}")
 
-# Función para limpiar valores NaN en diccionarios
+# Function that will clean NaN values in dicts
 def clean_nan_values(data_dict):
     """
-    Reemplaza valores NaN con None en un diccionario para que sea compatible con JSON
+    Switches NaN values with None in a dict to be JSON compatible.
+    Mainly used for compatibility purposes.
     """
     for key in data_dict:
         if isinstance(data_dict[key], float) and np.isnan(data_dict[key]):
             data_dict[key] = None
     return data_dict
 
+
+## ENDPOINTS
+
 @app.get("/api/riders")
 def get_top_riders(limit: int = None):
-    """Obtener los pilotos con más victorias."""
-    # Asegúrate de que las columnas numéricas sean números y no NaN
-    riders_info_df["Victories"] = pd.to_numeric(riders_info_df["Victories"], errors="coerce").fillna(0).astype(int)
+    """
+    Obtains riders with the most victories and converts them into a dict.
+    If the limit is None, every rider will be selected.
+    """
+    riders_info_df["Victories"] = pd.to_numeric(riders_info_df["Victories"], errors="coerce").fillna(0).astype(int) # fills NaN columns with "0"
     riders_info_df["World Championships"] = pd.to_numeric(riders_info_df["World Championships"], errors="coerce").fillna(0).astype(int)
     
-    # Si limit es None, devuelve todos los pilotos
-    if limit is None:
+    if limit is None: # if limit is None selects every rider
         df = riders_info_df
     else:
         df = riders_info_df.nlargest(limit, "Victories")
     
-    result = df[
+    result = df[ # re-formats result
         ["Riders All Time in All Classes", "Victories", "World Championships"]
     ].rename(columns={
         "Riders All Time in All Classes": "name",
@@ -58,45 +63,43 @@ def get_top_riders(limit: int = None):
         "World Championships": "world_championships",
     })
     
-    result["name"] = result["name"].apply(utils.format_rider_name)
+    result["name"] = result["name"].apply(utils.format_rider_name) # formats the name according to our utils method
     
-    # Convertir a registros y limpiar valores NaN
-    records = result.to_dict(orient="records")
+    records = result.to_dict(orient="records") # converts the result df to a dict and cleans NaN values
     clean_records = [clean_nan_values(record) for record in records]
     
     return clean_records
 
+
 @app.get("/api/riders/{name}")
 def get_rider_details(name: str):
-    """Obtener detalles de un piloto por su nombre."""
-    # Convertir nombre de la URL al formato del dataframe
-    # Manejo mejorado de nombres desde URL
-    decoded_name = name.replace("_", " ")
-    print(f"Buscando piloto: {decoded_name}")
+    """
+    Obtains details from a rider based on
+    their name.
+    """
+    decoded_name = name.replace("_", " ") # converts URL name format into df name format and prints its name for utility purposes
+    print(f"Searching data for the pilot... -> {decoded_name}")
     
-    # Formatear los nombres de los pilotos para facilitar la búsqueda
-    original_names = riders_info_df["Riders All Time in All Classes"].apply(utils.format_rider_name)
+    original_names = riders_info_df["Riders All Time in All Classes"].apply(utils.format_rider_name) # formats the pilots names to ease up the search
     
-    # Búsqueda insensible a mayúsculas/minúsculas
-    matches = original_names[original_names.str.lower() == decoded_name.lower()]
+    matches = original_names[original_names.str.lower() == decoded_name.lower()] # we search for the pilots without considering lower/uppercase
     
-    if not matches.empty:
+    if not matches.empty: # if found
+
         original_name = riders_info_df.loc[matches.index[0], "Riders All Time in All Classes"]
         rider = riders_info_df[riders_info_df["Riders All Time in All Classes"] == original_name].iloc[0]
         
-        # Asegúrate de que los valores numéricos son números y no NaN
-        victories = pd.to_numeric(rider["Victories"], errors="coerce")
+        victories = pd.to_numeric(rider["Victories"], errors="coerce") # ensures numeric values are indeed, numeric values
         world_championships = pd.to_numeric(rider["World Championships"], errors="coerce")
         
-        result = {
+        result = { # creates the result taking the matches and if not, establishes everything into 0
             "name": utils.format_rider_name(rider["Riders All Time in All Classes"]),
             "victories": int(victories) if not pd.isna(victories) else 0,
             "world_championships": int(world_championships) if not pd.isna(world_championships) else 0
         }
         return result
     
-    # Si no se encuentra el piloto, intentar una búsqueda más flexible
-    for idx, original_name in enumerate(riders_info_df["Riders All Time in All Classes"]):
+    for idx, original_name in enumerate(riders_info_df["Riders All Time in All Classes"]): # if it does not find the rider tries another less restricted search
         formatted_name = utils.format_rider_name(original_name)
         if decoded_name.lower() in formatted_name.lower():
             rider = riders_info_df.iloc[idx]
@@ -110,16 +113,18 @@ def get_rider_details(name: str):
             }
             return result
     
-    raise HTTPException(status_code=404, detail="Piloto no encontrado")
+    raise HTTPException(status_code=404, detail="Piloto no encontrado") # if nothing, raises an exception
+
 
 @app.get("/api/circuits")
 def get_top_circuits(limit: int = None):
-    """Obtener los circuitos con más GPs celebrados."""
-    # Asegúrate de que GPs_Held sea un número y no NaN
-    circuits_df["GPs_Held"] = pd.to_numeric(circuits_df["GPs_Held"], errors="coerce").fillna(0).astype(int)
+    """
+    Obtains circuits with the most number of GPs held and converts them into a dict.
+    If the limit is None, every circuit will be selected.
+    """
+    circuits_df["GPs_Held"] = pd.to_numeric(circuits_df["GPs_Held"], errors="coerce").fillna(0).astype(int) # ensures numeric values are indeed, numeric values
     
-    # Si limit es None, devuelve todos los circuitos
-    if limit is None:
+    if limit is None: # if limit is None selects every circuit
         df = circuits_df
     else:
         df = circuits_df.nlargest(limit, "GPs_Held")
