@@ -58,7 +58,7 @@ export default function Home() {
         ) : error ? (
           <div className="text-center text-red-600 font-bold text-lg">{error}</div>
         ) : (
-          <>
+          <div id="content">
             <h3 className="text-2xl font-bold mb-4">Top Riders</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {riders.map((rider, index) => (
@@ -80,6 +80,14 @@ export default function Home() {
                   </div>
                 </a>
               ))}
+            </div>
+            <div className="flex justify-center pt-8">
+                <a 
+                  href="/pilots"
+                  className="px-6 py-3 bg-gradient-to-r from-[#D50000] to-[#FF1744] hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg"
+                >
+                  See all riders ➡️​
+                </a>
             </div>
 
             <h3 className="text-2xl font-bold mt-8 mb-4">Top Circuits</h3>
@@ -104,7 +112,16 @@ export default function Home() {
                 </a>
               ))}
             </div>
-          </>
+            <div className="flex justify-center pt-8 pb-4">
+                <a 
+                  href="/circuits"
+                  className="px-6 py-3 bg-gradient-to-r from-[#D50000] to-[#FF1744] hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg"
+                >
+                  See all tracks ➡️​
+                </a>
+            </div>
+
+          </div>
         )}
       </div>
 

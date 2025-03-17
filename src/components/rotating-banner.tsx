@@ -38,7 +38,7 @@ export default function RotatingBanner() {
                     <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-3 text-center">MotoGP Results Manager</h1>
                     <p className="text-white text-sm md:text-lg mb-6 text-center">Track, analyze and visualize racing performance at lightning speed</p>
                     <div className="flex justify-center">
-                        <button className="px-6 py-3 bg-gradient-to-r from-[#D50000] to-[#FF1744] hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg">Get started!</button>
+                        <button className="px-6 py-3 bg-gradient-to-r from-[#D50000] to-[#FF1744] hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg"><a href="#content">Get started!</a></button>
                     </div>
                 </div>
             </div>
