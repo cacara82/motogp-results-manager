@@ -1,65 +1,95 @@
-import { Layout, Button, Space } from 'antd';
-import { HomeOutlined, InfoCircleOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { FaHome, FaInfoCircle, FaSearch, FaBars, FaTimes } from 'react-icons/fa';
 
-const { Header } = Layout;
+export default function Navbar() {
 
-const Navbar = () => {
+  // Attributes
+  const [searchFocused, setSearchFocused] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <Header style={{ 
-      padding: '0 16px',
-      background: 'linear-gradient(90deg, #D50000 0%, #FF1744 100%)',
-      position: 'sticky', 
-      top: 0, 
-      zIndex: 100, 
-      width: '100%',
-      display: 'flex', 
-      alignItems: 'center',
-      justifyContent: 'space-between'
-    }}>
-      {/* Logo y título */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <ThunderboltOutlined style={{ fontSize: '24px', color: 'white', marginRight: '8px' }} />
-        <h1 style={{ color: 'white', margin: 0, fontSize: '18px' }}>MotoGP Manager</h1>
+    <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-[#D50000] to-[#FF1744] shadow-lg">
+
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+    
+          <div className="flex items-center">
+            <div className="flex-shrink-0 flex items-center">
+              <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center">
+                <span className="text-red-600 font-bold text-xs">LOGO</span> {/* LOGO */}
+              </div>
+              <span className="ml-3 text-xl font-bold text-white tracking-wider hidden sm:block">MotoGP Results Manager</span>
+            </div>
+          </div>
+
+          <div className="hidden md:block flex-1 max-w-md mx-6">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FaSearch className="h-4 w-4 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                className={`block w-full pl-10 pr-3 py-2 rounded-full bg-white bg-opacity-20 border border-transparent focus:bg-white focus:text-gray-900 focus:border-white focus:ring-white focus:outline-none transition duration-200 ${
+                  searchFocused ? 'text-gray-900' : 'text-white placeholder-gray-300'
+                }`}
+                placeholder="Search for riders, tracks..."
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setSearchFocused(false)}
+              />
+            </div>
+          </div>
+
+          <div className="hidden md:flex items-center space-x-1">
+            <a href="/" className="px-4 py-2 rounded-md text-white font-medium flex items-center hover:bg-white hover:text-red-600 hover:shadow-md transition duration-200">
+              <FaHome className="mr-2" /> Home
+            </a>
+            <a href="/about" className="px-4 py-2 rounded-md text-white font-medium flex items-center hover:bg-white hover:text-red-600 hover:shadow-md transition duration-200">
+              <FaInfoCircle className="mr-2" /> About
+            </a>
+          </div>
+
+          <div className="md:hidden flex items-center"> {/* MOBILE TOGGLER - hidden by default, only in small screens */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-red-600 focus:outline-none transition duration-200"
+              aria-expanded={isMenuOpen}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <FaTimes className="h-6 w-6" /> : <FaBars className="h-6 w-6" />}
+            </button>
+          </div>
+          
+        </div>
       </div>
 
-      {/* Menú simplificado con botones */}
-      <Space>
-        <Button 
-          type="text" 
-          icon={<HomeOutlined />} 
-          style={{ color: 'white' }}
-          className="nav-button"
-        >
-          Home
-        </Button>
-        <Button 
-          type="text" 
-          icon={<InfoCircleOutlined />} 
-          style={{ color: 'white' }}
-          className="nav-button"
-        >
-          About
-        </Button>
-      </Space>
+      {/* MOBILE MENU */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-red-800 shadow-inner">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <a href="/" className="block px-3 py-2 rounded-md text-white font-medium hover:bg-white hover:text-red-600 transition duration-200">
+              <div className="flex items-center">
+                <FaHome className="mr-2" /> Home
+              </div>
+            </a>
+            <a href="/about" className="block px-3 py-2 rounded-md text-white font-medium hover:bg-white hover:text-red-600 transition duration-200">
+              <div className="flex items-center">
+                <FaInfoCircle className="mr-2" /> About
+              </div>
+            </a>
+            <div className="relative mt-3">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FaSearch className="h-4 w-4 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                className="block w-full pl-10 pr-3 py-2 rounded-full bg-white bg-opacity-20 border border-transparent focus:bg-white focus:text-gray-900 focus:border-white focus:ring-white focus:outline-none transition duration-200 text-white placeholder-gray-300"
+                placeholder="Search for riders, tracks..."
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
-      {/* Estilos para el hover */}
-      <style>{`
-        .nav-button:hover {
-          background-color: #0077CC !important;
-          color: white !important;
-        }
-        
-        @media (max-width: 576px) {
-          .nav-button {
-            padding: 4px 8px;
-          }
-          .nav-button .anticon + span {
-            display: none;
-          }
-        }
-      `}</style>
-    </Header>
+    </nav>
   );
-};
-
-export default Navbar;
+}

@@ -113,7 +113,7 @@ def get_rider_details(name: str):
             }
             return result
     
-    raise HTTPException(status_code=404, detail="Piloto no encontrado") # if nothing, raises an exception
+    raise HTTPException(status_code=204, detail="Piloto no encontrado") # if nothing, raises an exception
 
 
 @app.get("/api/circuits")
@@ -136,35 +136,34 @@ def get_top_circuits(limit: int = None):
         "GPs_Held": "gps_held",
     })
     
-    # Convertir a registros y limpiar valores NaN
-    records = renamed_circuits.to_dict(orient="records")
+    records = renamed_circuits.to_dict(orient="records") # converts the result df to a dict and cleans NaN values
     clean_records = [clean_nan_values(record) for record in records]
     
     return clean_records
 
+
 @app.get("/api/circuits/{name}")
 def get_circuit_details(name: str):
-    """Obtener detalles de un circuito por su nombre."""
-    # Convertir nombre de la URL al formato del dataframe
-    decoded_name = name.replace("_", " ")
-    print(f"Buscando circuito: {decoded_name}")
+    """
+    Obtains details from a circuit based on
+    their name.
+    """
+    decoded_name = name.replace("_", " ") # converts URL name format into df name format and prints its name for utility purposes
+    print(f"Searching data for the circuit... -> {decoded_name}")
     
-    # Búsqueda insensible a mayúsculas/minúsculas
-    circuit = circuits_df[circuits_df["Circuit"].str.lower() == decoded_name.lower()]
+    circuit = circuits_df[circuits_df["Circuit"].str.lower() == decoded_name.lower()] # we search for the circuits without considering lower/uppercase
     
     if not circuit.empty:
         circuit = circuit.iloc[0]
-        # Asegúrate de que GPs_Held sea un número y no NaN
         gps_held = pd.to_numeric(circuit["GPs_Held"], errors="coerce")
         
-        return {
+        return { # creates the result taking the matches and if not, establishes everything into 0
             "name": circuit["Circuit"],
             "country": circuit["Country"],
             "gps_held": int(gps_held) if not pd.isna(gps_held) else 0
         }
     
-    # Si no se encuentra el circuito exacto, intentar una búsqueda parcial
-    for idx, circuit_name in enumerate(circuits_df["Circuit"]):
+    for idx, circuit_name in enumerate(circuits_df["Circuit"]): # if it does not find the rider tries another less restricted search
         if decoded_name.lower() in circuit_name.lower():
             circuit = circuits_df.iloc[idx]
             gps_held = pd.to_numeric(circuit["GPs_Held"], errors="coerce")
@@ -175,7 +174,10 @@ def get_circuit_details(name: str):
                 "gps_held": int(gps_held) if not pd.isna(gps_held) else 0
             }
     
-    raise HTTPException(status_code=404, detail="Circuito no encontrado")
+    raise HTTPException(status_code=204, detail="Circuito no encontrado") # if nothing, raises an exception
+
+
+## UVICORN USAGE
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

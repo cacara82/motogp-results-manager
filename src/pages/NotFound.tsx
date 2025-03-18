@@ -5,10 +5,10 @@ import Navbar from "../components/navbar.tsx";
 import Footer from "../components/footer.tsx";
 
 export default function NotFound() {
-  const navigate = useNavigate();
 
-  // Registrar la página no encontrada en consola
-  useEffect(() => {
+  // Attributes and uses
+  const navigate = useNavigate();
+  useEffect(() => { // print not found error on console
     console.log("404 Page Not Found");
   }, []);
 
@@ -20,65 +20,38 @@ export default function NotFound() {
 
       <div className="p-6 flex-grow">
         <div className="max-w-4xl mx-auto">
+
           <div className="flex justify-between items-center mb-6">
-            <button 
-              onClick={() => navigate(-1)} 
-              className="px-4 py-2 bg-gray-200 hover:bg-gray-300 transition-all duration-300 text-gray-800 font-medium rounded-lg shadow-md flex items-center"
-            >
+            <button onClick={() => navigate(-1)} className="px-4 py-2 bg-gray-200 hover:bg-gray-300 transition-all duration-300 text-gray-800 font-medium rounded-lg shadow-md flex items-center">
               <ArrowLeftOutlined className="mr-2" /> Go Back
             </button>
-            <a 
-              href="/" 
-              className="px-4 py-2 bg-gradient-to-r from-[#D50000] to-[#FF1744] hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md flex items-center"
-            >
-              <HomeOutlined className="mr-2" /> Home
-            </a>
           </div>
 
           <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-            <div className="bg-gradient-to-r from-gray-700 to-gray-500 p-6 text-white">
+
+            <div className=" bg-gradient-to-r from-[#D50000] to-[#FF1744] p-6 text-white">
               <h1 className="text-3xl font-bold flex items-center">
-                <WarningOutlined className="mr-3 text-4xl" />
-                Page Not Found
+                <WarningOutlined className="mr-3 text-4xl" /> 404: Page Not Found
               </h1>
             </div>
             
             <div className="p-6">
+
               <div className="bg-gray-50 rounded-lg p-8 shadow text-center">
-                <div className="flex justify-center mb-6">
+
+                <div className="flex text-[#D50000] justify-center mb-6">
                   <WarningOutlined className="text-6xl text-red-500" />
                 </div>
                 
-                <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-                  Oops! This page doesn't exist
-                </h2>
+                <h2 className="text-2xl font-bold italic mb-4 text-gray-900"> Oops! This page doesn't exist </h2>
+                <p className="text-gray-800 font mb-6">The page you're looking for might have been removed or does not exist.</p>
                 
-                <p className="text-gray-600 mb-6">
-                  The page you're looking for might have been removed, had its name changed, 
-                  or is temporarily unavailable.
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
-                  <a 
-                    href="/circuits" 
-                    className="px-4 py-3 bg-blue-600 hover:bg-blue-700 transition-all duration-300 text-white font-medium rounded-lg shadow-md flex items-center justify-center"
-                  >
-                    View Circuits
-                  </a>
-                  <a 
-                    href="/pilots" 
-                    className="px-4 py-3 bg-green-600 hover:bg-green-700 transition-all duration-300 text-white font-medium rounded-lg shadow-md flex items-center justify-center"
-                  >
-                    View Riders
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-4 max-w-md mx-auto">
+                  <a href="/" className="px-4 py-2 bg-gradient-to-r from-[#D50000] to-[#FF1744] hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md justify-center flex items-center">
+                    <HomeOutlined className="mr-2" /> Go Home
                   </a>
                 </div>
-                
-                <div className="mt-6 p-3 bg-red-50 border-l-4 border-red-500 text-red-700 rounded text-left">
-                  <p>
-                    If you think this is an error, please contact the site administrator or
-                    try refreshing the page.
-                  </p>
-                </div>
+              
               </div>
             </div>
           </div>
