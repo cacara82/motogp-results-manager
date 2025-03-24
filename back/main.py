@@ -4,6 +4,7 @@ import uvicorn # type: ignore
 import pandas as pd
 import numpy as np
 import utils
+import os
 
 app = FastAPI(title="MotoGP Kagglehub API")
 
@@ -47,27 +48,28 @@ def get_top_riders(limit: int = None):
     Obtains riders with the most victories and converts them into a dict.
     If the limit is None, every rider will be selected.
     """
-    riders_info_df["Victories"] = pd.to_numeric(riders_info_df["Victories"], errors="coerce").fillna(0).astype(int) # fills NaN columns with "0"
+    riders_info_df["Victories"] = pd.to_numeric(riders_info_df["Victories"], errors="coerce").fillna(0).astype(int) # ensures numeric values are numeric
     riders_info_df["World Championships"] = pd.to_numeric(riders_info_df["World Championships"], errors="coerce").fillna(0).astype(int)
-    
-    if limit is None: # if limit is None selects every rider
-        df = riders_info_df
-    else:
-        df = riders_info_df.nlargest(limit, "Victories")
-    
-    result = df[ # re-formats result
-        ["Riders All Time in All Classes", "Victories", "World Championships"]
-    ].rename(columns={
+
+    df = riders_info_df if limit is None else riders_info_df.nlargest(limit, "Victories") # filter by result limit
+
+    columns_to_select = ["Riders All Time in All Classes", "Victories", "World Championships"] # verify if "Image" exists in the Df and creates it
+    if "Image" in df.columns:
+        columns_to_select.append("Image")
+
+    result = df[columns_to_select].rename(columns={ # formats names and apply name change
         "Riders All Time in All Classes": "name",
         "Victories": "victories",
-        "World Championships": "world_championships",
+        "World Championships": "world_championships"
     })
-    
-    result["name"] = result["name"].apply(utils.format_rider_name) # formats the name according to our utils method
-    
-    records = result.to_dict(orient="records") # converts the result df to a dict and cleans NaN values
+    result["name"] = result["name"].apply(utils.format_rider_name)
+    result["image"] = result["name"].apply(  # applies image
+        lambda x: f"public/pilots/{x}.png" if os.path.exists(f"public/pilots/{x}.png") else "public/pilots/pilot_default.png"
+    )
+
+    records = result.to_dict(orient="records") # converts df into a dict
     clean_records = [clean_nan_values(record) for record in records]
-    
+
     return clean_records
 
 
@@ -105,7 +107,6 @@ def get_rider_details(name: str):
             rider = riders_info_df.iloc[idx]
             victories = pd.to_numeric(rider["Victories"], errors="coerce")
             world_championships = pd.to_numeric(rider["World Championships"], errors="coerce")
-            
             result = {
                 "name": utils.format_rider_name(rider["Riders All Time in All Classes"]),
                 "victories": int(victories) if not pd.isna(victories) else 0,
@@ -124,10 +125,15 @@ def get_top_circuits(limit: int = None):
     """
     circuits_df["GPs_Held"] = pd.to_numeric(circuits_df["GPs_Held"], errors="coerce").fillna(0).astype(int) # ensures numeric values are indeed, numeric values
     
+    
     if limit is None: # if limit is None selects every circuit
         df = circuits_df
     else:
         df = circuits_df.nlargest(limit, "GPs_Held")
+
+    columns_to_select = ["Circuit", "Country", "GPs_Held"] # verify if "Image" exists in the Df and creates it
+    if "Image" in df.columns:
+        columns_to_select.append("Image")
     
     top_circuits = df[["Circuit", "Country", "GPs_Held"]]
     renamed_circuits = top_circuits.rename(columns={
@@ -135,6 +141,10 @@ def get_top_circuits(limit: int = None):
         "Country": "country",
         "GPs_Held": "gps_held",
     })
+    renamed_circuits["country"] = renamed_circuits["country"].apply(utils.format_country_name) # apply country formatted name
+    renamed_circuits["image"] = renamed_circuits["name"].apply(  # applies image
+        lambda x: f"public/tracks/{x}.png" if os.path.exists(f"public/tracks/{x}.png") else "public/tracks/circuit_default.png"
+    )
     
     records = renamed_circuits.to_dict(orient="records") # converts the result df to a dict and cleans NaN values
     clean_records = [clean_nan_values(record) for record in records]
@@ -159,7 +169,7 @@ def get_circuit_details(name: str):
         
         return { # creates the result taking the matches and if not, establishes everything into 0
             "name": circuit["Circuit"],
-            "country": circuit["Country"],
+            "country": utils.format_country_name(circuit["Country"]),
             "gps_held": int(gps_held) if not pd.isna(gps_held) else 0
         }
     
@@ -170,7 +180,7 @@ def get_circuit_details(name: str):
             
             return {
                 "name": circuit["Circuit"],
-                "country": circuit["Country"],
+                "country": utils.format_country_name(circuit["Country"]), # apply country formatted name
                 "gps_held": int(gps_held) if not pd.isna(gps_held) else 0
             }
     

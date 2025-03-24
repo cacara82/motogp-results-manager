@@ -10,16 +10,18 @@ import Navbar from "../components/navbar.tsx";
 import Footer from "../components/footer.tsx";
 import RotatingBanner from "../components/rotating-banner.tsx";
 
-interface Rider {
+interface Rider { // interface for Riders
   name: string;
   world_championships: number;
   victories: number;
+  image: string;
 }
 
-interface Circuit {
+interface Circuit { // interface for Circuits
   name: string;
   country: string;
   gps_held: number;
+  image: string;
 }
 
 export default function Home() {
@@ -44,12 +46,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
+
+      {/* Navbar */}
       <header className="p-0 bg-gradient-to-r from-red-700 to-red-500 sticky top-0 z-50">
         <Navbar />
       </header>
 
+      {/* Rotating Banner */}
       <RotatingBanner />
 
+      {/* Content */}
       <div className="p-6">
         {loading ? (
           <div className="flex justify-center items-center h-40">
@@ -59,16 +65,14 @@ export default function Home() {
           <div className="text-center text-red-600 font-bold text-lg">{error}</div>
         ) : (
           <div id="content">
+
             <h3 className="text-2xl font-bold mb-4">Top Riders</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {riders.map((rider, index) => (
-                <a
-                  key={index}
-                  href={`/pilot/${rider.name.replace(/ /g, "_")}`}
-                  className="card bg-gradient-to-br from-blue-600 to-blue-400 text-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-                >
+                <a key={index} href={`/pilot/${rider.name.replace(/ /g, "_")}`} className="card bg-base-100 p-3 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 border-blue-600">
                   <div className="card-body">
-                    <h2 className="card-title text-white font-bold">{rider.name}</h2>
+                    <h2 className="text-xl font-semibold mb-2">{rider.name}</h2>
+                    <img src={rider.image} alt="image" height={100} width={100}></img>
                     <div className="flex items-center">
                       <TrophyOutlined className="mr-2 text-xl" />
                       <span>{rider.victories} Victories</span>
@@ -82,25 +86,19 @@ export default function Home() {
               ))}
             </div>
             <div className="flex justify-center pt-8">
-                <a 
-                  href="/pilots"
-                  className="px-6 py-3 bg-gradient-to-r from-[#D50000] to-[#FF1744] hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg"
-                >
-                  See all riders ➡️​
+                <a href="/pilots" className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg">
+                  See all riders
                 </a>
             </div>
 
             <h3 className="text-2xl font-bold mt-8 mb-4">Top Circuits</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {circuits.map((circuit, index) => (
-                <a
-                  key={index}
-                  href={`/circuit/${circuit.name.replace(/ /g, "_")}`}
-                  className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 border-red-600"
-                >
+                <a key={index} href={`/circuit/${circuit.name.replace(/ /g, "_")}`} className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 border-rose-600">
                   <div className="flex flex-row">
                     <div className="card-body p-4 flex-1">
                       <h4 className="text-xl font-semibold mb-2">{circuit.name}</h4>
+                      <img src={circuit.image} alt="image" height={150} width={150}></img>
                       <p className="text-gray-500">
                         <FlagOutlined className="mr-1" /> {circuit.country}
                       </p>
@@ -113,19 +111,18 @@ export default function Home() {
               ))}
             </div>
             <div className="flex justify-center pt-8 pb-4">
-                <a 
-                  href="/circuits"
-                  className="px-6 py-3 bg-gradient-to-r from-[#D50000] to-[#FF1744] hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg"
-                >
-                  See all tracks ➡️​
+                <a href="/circuits" className="px-6 py-3 bg-gradient-to-r from-rose-600 to-rose-500 hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg">
+                  See all tracks
                 </a>
             </div>
 
           </div>
         )}
       </div>
-
+      
+      {/* Footer */}
       <Footer />
+      
     </div>
   );
 }

@@ -37,3 +37,44 @@ def format_rider_name(name: str) -> str:
     if len(parts) > 1 and parts[0].isupper():
         return f"{parts[1].capitalize()} {parts[0].capitalize()}"
     return name.title()
+
+def format_country_name(country_code: str) -> str:
+    """
+    Formats the country name from the two letter format to full length country.
+    For non recognized countries it return the two letter code.
+        :return: The string of the country
+    """
+    country_mapping = {
+        'ES': 'Spain',
+        'IT': 'Italy',
+        'TH': 'Thailand',
+        'GB': 'Great Britain',
+        'ZA': 'South Africa',
+        'AU': 'Australia',
+        'FR': 'France',
+        'PT': 'Portugal',
+        'TT': 'Trinidad and Tobago',
+        'JP': 'Japan',
+        'TR': 'Turkey',
+        'BE': 'Belgium',
+        'DE': 'Germany',
+        'AR': 'Argentina',
+        'ID': 'India',
+        'AT': 'Austria',
+        'FI': 'Finland',
+        'BR': 'Brazil',
+        'HU': 'Hungary',
+        'CZ': 'Czech Republic',
+        'NL': 'Netherlands',
+        'IR': 'Ireland',
+        'SE': 'Sweden',
+        'YU': 'Yugoslavia',
+        'MY': 'Malaysia,',
+        'QA': 'Qatar',
+        'US': 'United States',
+        'CA': 'Canada',
+        'CH': 'Switzerland',
+        'CN': 'China'
+    }
+    
+    return country_mapping.get(country_code.upper(), country_code)

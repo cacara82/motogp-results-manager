@@ -3,44 +3,87 @@ import {
   TrophyOutlined,
   TeamOutlined,
   LoadingOutlined,
+  LeftOutlined,
+  RightOutlined,
 } from "@ant-design/icons";
 import Navbar from "../components/navbar.tsx";
 import Footer from "../components/footer.tsx";
 
-interface Rider {
+interface Rider { // interface for Pilots
   name: string;
   world_championships: number;
   victories: number;
+  image: string;
 }
 
 export default function Pilots() {
+
+  // useStates
   const [riders, setRiders] = useState<Rider[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Navigation
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+  const [totalPages, setTotalPages] = useState(0);
 
-  useEffect(() => {
+  useEffect(() => { // Fetch riders with useEffect
     fetch("http://127.0.0.1:8000/api/riders")
       .then((res) => (res.ok ? res.json() : Promise.reject("Failed to fetch riders")))
-      .then((data: Rider[]) => setRiders(Array.isArray(data) ? data : []))
+      .then((data: Rider[]) => {
+        const riderData = Array.isArray(data) ? data : [];
+        setRiders(riderData);
+        setTotalPages(Math.ceil(riderData.length / itemsPerPage));
+      })
       .catch(() => setError("Error loading data, please try again later."))
       .finally(() => setLoading(false));
   }, []);
 
+  const getCurrentPageRiders = () => { // obtain the riders for the current page
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return riders.slice(startIndex, endIndex);
+  };
+
+  const getPageNumbers = () => { // generate page numbers for navigation
+    const visiblePages = 5;
+    const pageNumbers = [];
+    let startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
+    let endPage = startPage + visiblePages - 1;
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - visiblePages + 1);
+    }
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+    }
+    while (pageNumbers.length < visiblePages) {
+      pageNumbers.push(null); 
+    }
+    return pageNumbers;
+  };
+
+  const handlePageChange = (pageNumber: number) => { // handle for page change
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
+
+      {/* Navbar */}
       <header className="p-0 bg-gradient-to-r from-red-700 to-red-500 sticky top-0 z-50">
         <Navbar />
       </header>
 
+      {/* Content */}
       <div className="p-6 flex-grow">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">All MotoGP Riders</h1>
-            <a 
-              href="/" 
-              className="px-4 py-2 bg-gradient-to-r from-[#D50000] to-[#FF1744] hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md"
-            >
-              Back to Home
+            <h1 className="text-3xl font-bold text-gray-800">All Riders</h1>
+            <a href="/circuits" className="px-4 py-2 bg-gradient-to-r from-rose-600 to-rose-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
+              Switch to tracks
             </a>
           </div>
 
@@ -51,32 +94,114 @@ export default function Pilots() {
           ) : error ? (
             <div className="text-center text-red-600 font-bold text-lg">{error}</div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {riders.map((rider, index) => (
-                <a
-                  key={index}
-                  href={`/pilot/${rider.name.replace(/ /g, "_")}`}
-                  className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-lg overflow-hidden border-t-4 border-blue-600"
-                >
-                  <div className="card-body p-4">
-                    <h2 className="text-xl font-bold text-gray-800">{rider.name}</h2>
-                    <div className="flex items-center mt-2 text-gray-700">
-                      <TrophyOutlined className="mr-2 text-amber-500" />
-                      <span>{rider.victories} Victories</span>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {getCurrentPageRiders().map((rider, index) => (
+                  <a key={index} href={`/pilot/${rider.name.replace(/ /g, "_")}`} className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-lg overflow-hidden border-t-4 border-blue-600">
+                    <div className="card-body p-4">
+                      <h2 className="text-xl font-bold text-gray-800">{rider.name}</h2>
+                      <img src={rider.image} alt="image" height={100} width={100}></img>
+                      <div className="flex items-center mt-2 text-gray-700">
+                        <TrophyOutlined className="mr-2 text-amber-500" />
+                        <span>{rider.victories} Victories</span>
+                      </div>
+                      <div className="flex items-center mt-1 text-gray-700">
+                        <TeamOutlined className="mr-2 text-blue-600" />
+                        <span>{rider.world_championships} Championships</span>
+                      </div>
                     </div>
-                    <div className="flex items-center mt-1 text-gray-700">
-                      <TeamOutlined className="mr-2 text-blue-600" />
-                      <span>{rider.world_championships} Championships</span>
+                  </a>
+                ))}
+              </div>
+              
+              {totalPages > 1 && (
+                <div className="flex justify-center mt-8">
+                  <nav className="inline-flex items-center">
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center justify-center">
+                        <button 
+                          onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                          disabled={currentPage === 1}
+                          className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                            currentPage === 1 
+                              ? 'text-gray-400 cursor-not-allowed' 
+                              : 'text-blue-600 hover:bg-blue-100'
+                          }`}
+                          aria-label="Previous page"
+                        >
+                          <LeftOutlined />
+                        </button>
+                      </div>
+                      
+                      <div className="flex items-center justify-center w-64">
+                        {currentPage > 3 && totalPages > 5 && (
+                          <>
+                            <button onClick={() => handlePageChange(1)} className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-red-100 text-gray-700">
+                              1
+                            </button>
+                            {currentPage > 4 && (
+                              <span className="flex items-center justify-center w-10 h-10 text-gray-500">...</span>
+                            )}
+                          </>
+                        )}
+                        
+                        {getPageNumbers().map((number, index) => (
+                          number !== null ? (
+                            <button
+                              key={index}
+                              onClick={() => handlePageChange(number)}
+                              className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                                currentPage === number
+                                  ? 'bg-blue-600 text-white'
+                                  : 'hover:bg-blue-100 text-gray-700'
+                              }`}
+                            >
+                              {number}
+                            </button>
+                          ) : (
+                            <span key={index} className="flex items-center justify-center w-10 h-10"></span>
+                          )
+                        ))}
+                        
+                        {currentPage < totalPages - 2 && totalPages > 5 && (
+                          <>
+                            {currentPage < totalPages - 3 && (
+                              <span className="flex items-center justify-center w-10 h-10 text-gray-500">...</span>
+                            )}
+                            <button onClick={() => handlePageChange(totalPages)} className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-red-100 text-gray-700">
+                              {totalPages}
+                            </button>
+                          </>
+                        )}
+                      </div>
+                      
+                      <div className="flex items-center justify-center">
+                        <button 
+                          onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                          disabled={currentPage === totalPages}
+                          className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                            currentPage === totalPages 
+                              ? 'text-gray-400 cursor-not-allowed' 
+                              : 'text-blue-600 hover:bg-blue-100'
+                          }`}
+                          aria-label="Next page"
+                        >
+                          <RightOutlined />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </a>
-              ))}
-            </div>
+                  </nav>
+                </div>
+              )}
+              
+            </>
           )}
         </div>
       </div>
 
+      {/* Footer */}  
       <Footer />
+
     </div>
   );
 }
