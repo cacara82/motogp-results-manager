@@ -5,12 +5,14 @@ import Pilots from './pages/Pilots'
 import CircuitDetail from './pages/CircuitDetail'
 import PilotDetail from './pages/PilotDetail'
 import NotFound from './pages/NotFound'
+import About from './pages/About'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>
+        <Route path="/about" element={<About/>}/>
         <Route path="/circuits" element={<Circuits/>}/>
         <Route path="/pilots" element={<Pilots/>}/>
         <Route path="/pilot/:name" element={<PilotDetail />} />

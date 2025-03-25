@@ -94,7 +94,7 @@ export default function Home() {
             <h3 className="text-2xl font-bold mt-8 mb-4">Top Circuits</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {circuits.map((circuit, index) => (
-                <a key={index} href={`/circuit/${circuit.name.replace(/ /g, "_")}`} className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 border-rose-600">
+                <a key={index} href={`/circuit/${circuit.name.replace(/ /g, "_")}`} className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 border-indigo-600">
                   <div className="flex flex-row">
                     <div className="card-body p-4 flex-1">
                       <h4 className="text-xl font-semibold mb-2">{circuit.name}</h4>
@@ -111,7 +111,7 @@ export default function Home() {
               ))}
             </div>
             <div className="flex justify-center pt-8 pb-4">
-                <a href="/circuits" className="px-6 py-3 bg-gradient-to-r from-rose-600 to-rose-500 hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg">
+                <a href="/circuits" className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg">
                   See all tracks
                 </a>
             </div>

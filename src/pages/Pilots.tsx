@@ -82,7 +82,7 @@ export default function Pilots() {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold text-gray-800">All Riders</h1>
-            <a href="/circuits" className="px-4 py-2 bg-gradient-to-r from-rose-600 to-rose-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
+            <a href="/circuits" className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
               Switch to tracks
             </a>
           </div>

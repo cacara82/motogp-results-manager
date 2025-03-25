@@ -81,7 +81,7 @@ export default function Circuits() {
       <div className="p-6 flex-grow">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">All MotoGP Circuits</h1>
+            <h1 className="text-3xl font-bold text-gray-800">All Circuits</h1>
             <a href="/pilots" className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
               Switch to riders
             </a>
@@ -97,7 +97,7 @@ export default function Circuits() {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {getCurrentPageCircuits().map((circuit, index) => (
-                  <a key={index} href={`/circuit/${circuit.name.replace(/ /g, "_")}`} className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 border-rose-600 rounded-lg">
+                  <a key={index} href={`/circuit/${circuit.name.replace(/ /g, "_")}`} className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-lg overflow-hidden border-t-4 border-indigo-600">
                     <div className="flex flex-row">
                       <div className="card-body p-4 flex-1">
                         <h4 className="text-xl font-semibold mb-2 text-gray-800">{circuit.name}</h4>
@@ -125,7 +125,7 @@ export default function Circuits() {
                           className={`flex items-center justify-center w-10 h-10 rounded-full ${
                             currentPage === 1 
                               ? 'text-gray-400 cursor-not-allowed' 
-                              : 'text-rose-600 hover:bg-rose-100'
+                              : 'text-indigo-600 hover:bg-indigo-100'
                           }`}
                           aria-label="Previous page"
                         >
@@ -152,8 +152,8 @@ export default function Circuits() {
                               onClick={() => handlePageChange(number)}
                               className={`flex items-center justify-center w-10 h-10 rounded-full ${
                                 currentPage === number
-                                  ? 'bg-rose-600 text-white'
-                                  : 'hover:bg-rose-100 text-gray-700'
+                                  ? 'bg-indigo-600 text-white'
+                                  : 'hover:bg-indigo-100 text-gray-700'
                               }`}
                             >
                               {number}
@@ -182,7 +182,7 @@ export default function Circuits() {
                           className={`flex items-center justify-center w-10 h-10 rounded-full ${
                             currentPage === totalPages 
                               ? 'text-gray-400 cursor-not-allowed' 
-                              : 'text-rose-600 hover:bg-rose-100'
+                              : 'text-indigo-600 hover:bg-indigo-100'
                           }`}
                           aria-label="Next page"
                         >

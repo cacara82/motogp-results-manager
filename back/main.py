@@ -77,7 +77,7 @@ def get_top_riders(limit: int = None):
 def get_rider_details(name: str):
     """
     Obtains details from a rider based on
-    their name.
+    their name, including an image path.
     """
     decoded_name = name.replace("_", " ") # converts URL name format into df name format and prints its name for utility purposes
     print(f"Searching data for the pilot... -> {decoded_name}")
@@ -87,32 +87,38 @@ def get_rider_details(name: str):
     matches = original_names[original_names.str.lower() == decoded_name.lower()] # we search for the pilots without considering lower/uppercase
     
     if not matches.empty: # if found
-
         original_name = riders_info_df.loc[matches.index[0], "Riders All Time in All Classes"]
         rider = riders_info_df[riders_info_df["Riders All Time in All Classes"] == original_name].iloc[0]
         
         victories = pd.to_numeric(rider["Victories"], errors="coerce") # ensures numeric values are indeed, numeric values
         world_championships = pd.to_numeric(rider["World Championships"], errors="coerce")
         
-        result = { # creates the result taking the matches and if not, establishes everything into 0
-            "name": utils.format_rider_name(rider["Riders All Time in All Classes"]),
+        formatted_name = utils.format_rider_name(rider["Riders All Time in All Classes"])
+        
+        result = {
+            "name": formatted_name,
             "victories": int(victories) if not pd.isna(victories) else 0,
-            "world_championships": int(world_championships) if not pd.isna(world_championships) else 0
+            "world_championships": int(world_championships) if not pd.isna(world_championships) else 0,
+            "image": f"public/pilots/{formatted_name}.png" if os.path.exists(f"public/pilots/{formatted_name}.png") else "public/pilots/pilot_default.png"
         }
         return result
     
     for idx, original_name in enumerate(riders_info_df["Riders All Time in All Classes"]): # if it does not find the rider tries another less restricted search
         formatted_name = utils.format_rider_name(original_name)
         if decoded_name.lower() in formatted_name.lower():
+
             rider = riders_info_df.iloc[idx]
             victories = pd.to_numeric(rider["Victories"], errors="coerce")
             world_championships = pd.to_numeric(rider["World Championships"], errors="coerce")
+            
             result = {
-                "name": utils.format_rider_name(rider["Riders All Time in All Classes"]),
-                "victories": int(victories) if not pd.isna(victories) else 0,
-                "world_championships": int(world_championships) if not pd.isna(world_championships) else 0
+            "name": formatted_name,
+            "victories": int(victories) if not pd.isna(victories) else 0,
+            "world_championships": int(world_championships) if not pd.isna(world_championships) else 0,
+            "image": f"public/pilots/{formatted_name}.png" if os.path.exists(f"public/pilots/{formatted_name}.png") else "public/pilots/pilot_default.png"
             }
-            return result
+
+        return result
     
     raise HTTPException(status_code=204, detail="Piloto no encontrado") # if nothing, raises an exception
 
@@ -166,11 +172,12 @@ def get_circuit_details(name: str):
     if not circuit.empty:
         circuit = circuit.iloc[0]
         gps_held = pd.to_numeric(circuit["GPs_Held"], errors="coerce")
-        
-        return { # creates the result taking the matches and if not, establishes everything into 0
+         
+        return {
             "name": circuit["Circuit"],
             "country": utils.format_country_name(circuit["Country"]),
-            "gps_held": int(gps_held) if not pd.isna(gps_held) else 0
+            "gps_held": int(gps_held) if not pd.isna(gps_held) else 0,
+            "image": f"public/tracks/{circuit['Circuit']}.png" if os.path.exists(f"public/tracks/{circuit['Circuit']}.png") else "public/tracks/circuit_default.png"
         }
     
     for idx, circuit_name in enumerate(circuits_df["Circuit"]): # if it does not find the rider tries another less restricted search
@@ -179,10 +186,11 @@ def get_circuit_details(name: str):
             gps_held = pd.to_numeric(circuit["GPs_Held"], errors="coerce")
             
             return {
-                "name": circuit["Circuit"],
-                "country": utils.format_country_name(circuit["Country"]), # apply country formatted name
-                "gps_held": int(gps_held) if not pd.isna(gps_held) else 0
-            }
+            "name": circuit["Circuit"],
+            "country": utils.format_country_name(circuit["Country"]),
+            "gps_held": int(gps_held) if not pd.isna(gps_held) else 0,
+            "image": f"public/tracks/{circuit['Circuit']}.png" if os.path.exists(f"public/tracks/{circuit['Circuit']}.png") else "public/tracks/circuit_default.png"
+        }
     
     raise HTTPException(status_code=204, detail="Circuito no encontrado") # if nothing, raises an exception
 
