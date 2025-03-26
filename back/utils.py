@@ -69,12 +69,13 @@ def format_country_name(country_code: str) -> str:
         'IR': 'Ireland',
         'SE': 'Sweden',
         'YU': 'Yugoslavia',
-        'MY': 'Malaysia,',
+        'MY': 'Malaysia',
         'QA': 'Qatar',
         'US': 'United States',
         'CA': 'Canada',
         'CH': 'Switzerland',
-        'CN': 'China'
+        'CN': 'China',
+        'VE': 'Venezuela'
     }
     
     return country_mapping.get(country_code.upper(), country_code)
