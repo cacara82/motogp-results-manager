@@ -1,0 +1,18 @@
+# Usar Python como base
+FROM python:3.10
+
+# Establecer el directorio de trabajo dentro del contenedor
+WORKDIR /motogp-results-manager-server
+
+# Copiar los archivos de requerimientos y la app
+COPY back/requirements.txt .
+RUN poetry install --no-cache-dir -r requirements.txt
+
+# Copiar todo el código dentro del contenedor
+COPY backend/ .
+
+# Exponer el puerto de FastAPI
+EXPOSE 8000
+
+# Ejecutar Uvicorn para servir la app
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
