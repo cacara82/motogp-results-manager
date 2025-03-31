@@ -1,18 +1,20 @@
-# Usar una imagen de Node.js
-FROM node:18-alpine
+FROM python:3.10
 
-# Establecer el directorio de trabajo en la raíz del proyecto
-WORKDIR /app
+WORKDIR /motogp-results-manager-server
 
-# Copiar package.json e instalar dependencias
-COPY package.json package-lock.json ./
-RUN npm install
+# Instalar Poetry
+RUN pip install poetry
 
-# Copiar el resto del código del frontend
+# Copiar los archivos de configuración de Poetry
+COPY pyproject.toml .
+COPY poetry.lock .
+
+# Instalar dependencias
+RUN poetry install --no-root
+
+# Copiar el resto de la aplicación
 COPY . .
 
-# Exponer el puerto de Vite (5173 por defecto)
-EXPOSE 5173
+EXPOSE 8000
 
-# Ejecutar Vite en modo desarrollo
-CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
