@@ -67,7 +67,7 @@ export default function PilotDetail() {
             <div className="space-y-6">
               
               <div className="bg-white rounded-lg shadow-xl p-6 flex items-center space-x-6">
-              <img src={`/${rider.image}`} alt={rider.name} className="w-48 h-48 object-cover border-4 border-blue-500"/>
+              <img src={`${rider.image}`} alt={rider.name} className="w-48 h-48 object-cover border-4 border-blue-500"/>
                 <div>
                   <h1 className="text-3xl font-bold text-gray-800">{rider.name}</h1>
                   <div className="text-gray-600 mt-2 italic">Professional MotoGP Rider</div>

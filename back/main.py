@@ -64,7 +64,7 @@ def get_top_riders(limit: int = None):
     })
     result["name"] = result["name"].apply(utils.format_rider_name)
     result["image"] = result["name"].apply(  # applies image
-        lambda x: f"public/pilots/{x}.png" if os.path.exists(f"public/pilots/{x}.png") else "public/pilots/pilot_default.png"
+        lambda x: f"/pilots/{x}.png" if os.path.exists(f"public/pilots/{x}.png") else "/pilots/pilot_default.png"
     )
 
     records = result.to_dict(orient="records") # converts df into a dict
@@ -99,7 +99,7 @@ def get_rider_details(name: str):
             "name": formatted_name,
             "victories": int(victories) if not pd.isna(victories) else 0,
             "world_championships": int(world_championships) if not pd.isna(world_championships) else 0,
-            "image": f"public/pilots/{formatted_name}.png" if os.path.exists(f"public/pilots/{formatted_name}.png") else "public/pilots/pilot_default.png"
+            "image": f"/pilots/{formatted_name}.png" if os.path.exists(f"public/pilots/{formatted_name}.png") else "/pilots/pilot_default.png"
         }
         return result
     
@@ -115,7 +115,7 @@ def get_rider_details(name: str):
             "name": formatted_name,
             "victories": int(victories) if not pd.isna(victories) else 0,
             "world_championships": int(world_championships) if not pd.isna(world_championships) else 0,
-            "image": f"public/pilots/{formatted_name}.png" if os.path.exists(f"public/pilots/{formatted_name}.png") else "public/pilots/pilot_default.png"
+            "image": f"/pilots/{formatted_name}.png" if os.path.exists(f"public/pilots/{formatted_name}.png") else "/pilots/pilot_default.png"
             }
 
         return result
@@ -149,7 +149,7 @@ def get_top_circuits(limit: int = None):
     })
     renamed_circuits["country"] = renamed_circuits["country"].apply(utils.format_country_name) # apply country formatted name
     renamed_circuits["image"] = renamed_circuits["name"].apply(  # applies image
-        lambda x: f"public/tracks/{x}.png" if os.path.exists(f"public/tracks/{x}.png") else "public/tracks/circuit_default.png"
+        lambda x: f"/tracks/{x}.png" if os.path.exists(f"public/tracks/{x}.png") else "/tracks/circuit_default.png"
     )
     
     records = renamed_circuits.to_dict(orient="records") # converts the result df to a dict and cleans NaN values
@@ -177,7 +177,7 @@ def get_circuit_details(name: str):
             "name": circuit["Circuit"],
             "country": utils.format_country_name(circuit["Country"]),
             "gps_held": int(gps_held) if not pd.isna(gps_held) else 0,
-            "image": f"public/tracks/{circuit['Circuit']}.png" if os.path.exists(f"public/tracks/{circuit['Circuit']}.png") else "public/tracks/circuit_default.png"
+            "image": f"/tracks/{circuit['Circuit']}.png" if os.path.exists(f"public/tracks/{circuit['Circuit']}.png") else "/tracks/circuit_default.png"
         }
     
     for idx, circuit_name in enumerate(circuits_df["Circuit"]): # if it does not find the rider tries another less restricted search
@@ -189,7 +189,7 @@ def get_circuit_details(name: str):
             "name": circuit["Circuit"],
             "country": utils.format_country_name(circuit["Country"]),
             "gps_held": int(gps_held) if not pd.isna(gps_held) else 0,
-            "image": f"public/tracks/{circuit['Circuit']}.png" if os.path.exists(f"public/tracks/{circuit['Circuit']}.png") else "public/tracks/circuit_default.png"
+            "image": f"/tracks/{circuit['Circuit']}.png" if os.path.exists(f"public/tracks/{circuit['Circuit']}.png") else "/tracks/circuit_default.png"
         }
     
     raise HTTPException(status_code=204, detail="Circuito no encontrado") # if nothing, raises an exception
