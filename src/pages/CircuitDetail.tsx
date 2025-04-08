@@ -31,7 +31,7 @@ export default function CircuitDetail() {
       return;
     }
 
-    fetch(`http://127.0.0.1:8000/api/circuits/${name}`)
+    fetch(`https://motogp-results-manager-server.onrender.com/api/circuits/${name}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Failed to fetch circuit details: ${res.status}`);

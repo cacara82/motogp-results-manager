@@ -29,7 +29,7 @@ export default function Circuits() {
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => { // useEffect to fetch circuits
-    fetch("http://127.0.0.1:8000/api/circuits")
+    fetch("https://motogp-results-manager-server.onrender.com/api/circuits")
       .then((res) => (res.ok ? res.json() : Promise.reject("Failed to fetch circuits")))
       .then((data: Circuit[]) => {
         const circuitData = Array.isArray(data) ? data : [];

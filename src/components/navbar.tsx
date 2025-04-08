@@ -44,8 +44,8 @@ export default function Navbar() {
       setIsLoading(true);
       try { // try to fetch riders and circuits
         const [ridersResponse, circuitsResponse] = await Promise.all([ 
-          fetch('http://127.0.0.1:8000/api/riders'),
-          fetch('http://127.0.0.1:8000/api/circuits')
+          fetch('https://motogp-results-manager-server.onrender.com/api/riders'),
+          fetch('https://motogp-results-manager-server.onrender.com/api/circuits')
         ]);
         const riders: Rider[] = await ridersResponse.json();
         const circuits: Circuit[] = await circuitsResponse.json();

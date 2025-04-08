@@ -29,7 +29,7 @@ export default function Pilots() {
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => { // Fetch riders with useEffect
-    fetch("http://127.0.0.1:8000/api/riders")
+    fetch("https://motogp-results-manager-server.onrender.com/api/riders")
       .then((res) => (res.ok ? res.json() : Promise.reject("Failed to fetch riders")))
       .then((data: Rider[]) => {
         const riderData = Array.isArray(data) ? data : [];

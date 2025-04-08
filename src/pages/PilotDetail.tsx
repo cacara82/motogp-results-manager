@@ -27,7 +27,7 @@ export default function PilotDetail() {
       return;
     }
 
-    fetch(`http://127.0.0.1:8000/api/riders/${name}`)
+    fetch(`https://motogp-results-manager-server.onrender.com/api/riders/${name}`)
       .then((res) => {
         if (!res.ok) throw new Error(`Failed to fetch rider details`);
         return res.json();

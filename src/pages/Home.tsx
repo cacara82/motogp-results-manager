@@ -33,10 +33,10 @@ export default function Home() {
 
   useEffect(() => {
     Promise.all([
-      fetch("http://127.0.0.1:8000/api/riders?limit=4")
+      fetch("https://motogp-results-manager-server.onrender.com/api/riders?limit=4")
         .then((res) => res.ok ? res.json() : Promise.reject("Failed to fetch riders"))
         .then((data: Rider[]) => setRiders(Array.isArray(data) ? data : [])),
-      fetch("http://127.0.0.1:8000/api/circuits?limit=3")
+      fetch("https://motogp-results-manager-server.onrender.com/api/circuits?limit=3")
         .then((res) => res.ok ? res.json() : Promise.reject("Failed to fetch circuits"))
         .then((data: Circuit[]) => setCircuits(Array.isArray(data) ? data : [])),
     ])
