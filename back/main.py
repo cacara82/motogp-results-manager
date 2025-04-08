@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware # type: ignore
 import uvicorn # type: ignore
 import pandas as pd
 import numpy as np
-import utils
+from back import utils
 import os
 
 app = FastAPI(title="MotoGP Kagglehub API")
