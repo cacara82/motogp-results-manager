@@ -115,7 +115,7 @@ export default function PilotDetail() {
                     <div className="flex items-center">
                       <FireOutlined className="text-2xl text-blue-600 mr-3" />
                       <div>
-                        <div className="text-lg font-medium text-gray-700">{rider.world_championships}</div>
+                        <div className="text-lg font-medium text-gray-700"><strong>{rider.world_championships}</strong></div>
                         <div className="text-gray-500">World Championships</div>
                       </div>
                     </div>
