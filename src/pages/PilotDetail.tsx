@@ -8,6 +8,9 @@ interface Rider {
   name: string;
   world_championships: number;
   victories: number;
+  second_places: number;
+  third_places: number;
+  poles: number;
   image: string;
 }
 
@@ -86,6 +89,27 @@ export default function PilotDetail() {
                       <div>
                         <div className="text-lg font-medium text-gray-700">{rider.victories}</div>
                         <div className="text-gray-500">Total Victories</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <TrophyOutlined className="text-2xl text-amber-500 mr-3" />
+                      <div>
+                        <div className="text-lg font-medium text-gray-700">{rider.second_places}</div>
+                        <div className="text-gray-500">2nd places</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <TrophyOutlined className="text-2xl text-amber-500 mr-3" />
+                      <div>
+                        <div className="text-lg font-medium text-gray-700">{rider.third_places}</div>
+                        <div className="text-gray-500">3rd places</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <TrophyOutlined className="text-2xl text-amber-500 mr-3" />
+                      <div>
+                        <div className="text-lg font-medium text-gray-700">{rider.poles}</div>
+                        <div className="text-gray-500">Poles</div>
                       </div>
                     </div>
                     <div className="flex items-center">

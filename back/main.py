@@ -49,17 +49,23 @@ def get_top_riders(limit: int = None):
     If the limit is None, every rider will be selected.
     """
     riders_info_df["Victories"] = pd.to_numeric(riders_info_df["Victories"], errors="coerce").fillna(0).astype(int) # ensures numeric values are numeric
+    riders_info_df["2nd places"] = pd.to_numeric(riders_info_df["2nd places"], errors="coerce").fillna(0).astype(int)
+    riders_info_df["3rd places"] = pd.to_numeric(riders_info_df["3rd places"], errors="coerce").fillna(0).astype(int)
+    riders_info_df["Pole positions from '74 to 2022"] = pd.to_numeric(riders_info_df["Pole positions from '74 to 2022"], errors="coerce").fillna(0).astype(int)
     riders_info_df["World Championships"] = pd.to_numeric(riders_info_df["World Championships"], errors="coerce").fillna(0).astype(int)
 
     df = riders_info_df if limit is None else riders_info_df.nlargest(limit, "Victories") # filter by result limit
 
-    columns_to_select = ["Riders All Time in All Classes", "Victories", "World Championships"] # verify if "Image" exists in the Df and creates it
+    columns_to_select = ["Riders All Time in All Classes", "Victories", "2nd places", "3rd places", "Pole positions from '74 to 2022", "World Championships"] # verify if "Image" exists in the Df and creates it
     if "Image" in df.columns:
         columns_to_select.append("Image")
 
     result = df[columns_to_select].rename(columns={ # formats names and apply name change
         "Riders All Time in All Classes": "name",
         "Victories": "victories",
+        "2nd places": "2nd_places",
+        "3rd places": "3rd_places",
+        "Pole positions from '74 to 2022": "poles",
         "World Championships": "world_championships"
     })
     result["name"] = result["name"].apply(utils.format_rider_name)
@@ -91,6 +97,9 @@ def get_rider_details(name: str):
         rider = riders_info_df[riders_info_df["Riders All Time in All Classes"] == original_name].iloc[0]
         
         victories = pd.to_numeric(rider["Victories"], errors="coerce") # ensures numeric values are indeed, numeric values
+        second_places = pd.to_numeric(rider["2nd places"], errors="coerce")
+        third_places = pd.to_numeric(rider["3rd places"], errors="coerce")
+        poles = pd.to_numeric(rider["Pole positions from '74 to 2022"], errors="coerce")
         world_championships = pd.to_numeric(rider["World Championships"], errors="coerce")
         
         formatted_name = utils.format_rider_name(rider["Riders All Time in All Classes"])
@@ -98,6 +107,9 @@ def get_rider_details(name: str):
         result = {
             "name": formatted_name,
             "victories": int(victories) if not pd.isna(victories) else 0,
+            "second_places": int(second_places) if not pd.isna(second_places) else 0,
+            "third_places": int(third_places) if not pd.isna(third_places) else 0,
+            "poles": int(poles) if not pd.isna(poles) else 0,
             "world_championships": int(world_championships) if not pd.isna(world_championships) else 0,
             "image": f"/pilots/{formatted_name}.png" if os.path.exists(f"public/pilots/{formatted_name}.png") else "/pilots/pilot_default.png"
         }
@@ -114,6 +126,9 @@ def get_rider_details(name: str):
             result = {
             "name": formatted_name,
             "victories": int(victories) if not pd.isna(victories) else 0,
+            "second_places": int(second_places) if not pd.isna(second_places) else 0,
+            "third_places": int(third_places) if not pd.isna(third_places) else 0,
+            "poles": int(poles) if not pd.isna(poles) else 0,
             "world_championships": int(world_championships) if not pd.isna(world_championships) else 0,
             "image": f"/pilots/{formatted_name}.png" if os.path.exists(f"public/pilots/{formatted_name}.png") else "/pilots/pilot_default.png"
             }
