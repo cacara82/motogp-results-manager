@@ -120,7 +120,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
               <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center">
-                <span className="text-red-600 font-bold text-xs">LOGO</span>
+                <img className="text-red-600 font-bold text-xs" src='logos/logo.png'/>
               </div>
               <span className="ml-3 text-xl font-bold text-white tracking-wider hidden sm:block">MotoGP Results Manager</span>
             </div>
