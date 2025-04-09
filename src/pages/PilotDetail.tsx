@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {TrophyOutlined, TeamOutlined, LoadingOutlined} from "@ant-design/icons";
+import {TrophyOutlined, LoadingOutlined, FieldTimeOutlined, ThunderboltOutlined, StarOutlined, FireOutlined} from "@ant-design/icons";
 import Navbar from "../components/navbar.tsx";
 import Footer from "../components/footer.tsx";
 
@@ -92,28 +92,28 @@ export default function PilotDetail() {
                       </div>
                     </div>
                     <div className="flex items-center">
-                      <TrophyOutlined className="text-2xl text-amber-500 mr-3" />
+                      <ThunderboltOutlined className="text-2xl text-amber-500 mr-3" />
                       <div>
                         <div className="text-lg font-medium text-gray-700">{rider.second_places}</div>
                         <div className="text-gray-500">2nd places</div>
                       </div>
                     </div>
                     <div className="flex items-center">
-                      <TrophyOutlined className="text-2xl text-amber-500 mr-3" />
+                      <StarOutlined className="text-2xl text-amber-500 mr-3" />
                       <div>
                         <div className="text-lg font-medium text-gray-700">{rider.third_places}</div>
                         <div className="text-gray-500">3rd places</div>
                       </div>
                     </div>
                     <div className="flex items-center">
-                      <TrophyOutlined className="text-2xl text-amber-500 mr-3" />
+                      <FieldTimeOutlined className="text-2xl text-amber-500 mr-3" />
                       <div>
                         <div className="text-lg font-medium text-gray-700">{rider.poles}</div>
                         <div className="text-gray-500">Poles</div>
                       </div>
                     </div>
                     <div className="flex items-center">
-                      <TeamOutlined className="text-2xl text-blue-600 mr-3" />
+                      <FireOutlined className="text-2xl text-blue-600 mr-3" />
                       <div>
                         <div className="text-lg font-medium text-gray-700">{rider.world_championships}</div>
                         <div className="text-gray-500">World Championships</div>
