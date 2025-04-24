@@ -210,6 +210,119 @@ def get_circuit_details(name: str):
     raise HTTPException(status_code=204, detail="Circuito no encontrado") # if nothing, raises an exception
 
 
+@app.get("/api/constructors")
+def get_top_constructors(limit: int = None):
+    """
+    Obtains constructors with the most championships and converts them into a dict.
+    If the limit is None, every constructor will be selected.
+    """
+    # Get unique constructors from races_winners_df to count their victories
+    constructor_victories = races_winners_df['Constructor'].value_counts().reset_index()
+    constructor_victories.columns = ['Constructor', 'Victories']
+    
+    # Get constructor championships from constructors_df
+    constructor_championships = constructors_df['Constructor'].value_counts().reset_index()
+    constructor_championships.columns = ['Constructor', 'Championships']
+    
+    # Merge the two dataframes to get both victories and championships
+    merged_df = pd.merge(constructor_victories, constructor_championships, on='Constructor', how='left')
+    merged_df['Championships'] = merged_df['Championships'].fillna(0).astype(int)
+    
+    # Get classes for each constructor (taking the most recent or common one)
+    constructor_classes = races_winners_df.groupby('Constructor')['Class'].agg(lambda x: x.value_counts().index[0]).reset_index()
+    
+    # Merge with classes
+    merged_df = pd.merge(merged_df, constructor_classes, on='Constructor', how='left')
+    
+    # Sort by championships (primary) and victories (secondary)
+    merged_df = merged_df.sort_values(by=['Championships', 'Victories'], ascending=False)
+    
+    # Apply limit if provided
+    if limit is not None:
+        merged_df = merged_df.head(limit)
+    
+    # Rename columns for consistent API response
+    result = merged_df.rename(columns={
+        'Constructor': 'name',
+        'Championships': 'constructor_championships',
+        'Victories': 'victories',
+        'Class': 'class'
+    })
+    
+    # Add image paths
+    result['image'] = result['name'].apply(
+        lambda x: f"/constructors/{x}.png" if os.path.exists(f"public/constructors/{x}.png") else "/constructors/constructor_default.png"
+    )
+    
+    # Convert to dict and clean NaN values
+    records = result.to_dict(orient="records")
+    clean_records = [clean_nan_values(record) for record in records]
+    
+    return clean_records
+
+
+@app.get("/api/constructor/{name}")
+def get_constructor_details(name: str):
+    """
+    Obtains details from a constructor based on
+    their name, including an image path.
+    """
+    decoded_name = name.replace("_", " ")
+    print(f"Searching data for the constructor... -> {decoded_name}")
+    
+    # Check if constructor exists in races_winners_df
+    constructor_data = races_winners_df[races_winners_df['Constructor'].str.lower() == decoded_name.lower()]
+    
+    if not constructor_data.empty:
+        # Get the exact constructor name with correct casing
+        constructor_name = constructor_data['Constructor'].iloc[0]
+        
+        # Count victories
+        victories = len(constructor_data)
+        
+        # Get the most common class for this constructor
+        constructor_class = constructor_data['Class'].value_counts().index[0]
+        
+        # Check championships
+        championships_data = constructors_df[constructors_df['Constructor'].str.lower() == decoded_name.lower()]
+        championships = len(championships_data) if not championships_data.empty else 0
+        
+        result = {
+            "name": constructor_name,
+            "class": constructor_class,
+            "constructor_championships": championships,
+            "victories": victories,
+            "image": f"/constructors/{constructor_name}.png" if os.path.exists(f"public/constructors/{constructor_name}.png") else "/constructors/constructor_default.png"
+        }
+        return result
+    
+    # If not found by exact match, try partial match
+    for constructor_name in races_winners_df['Constructor'].unique():
+        if decoded_name.lower() in constructor_name.lower():
+            constructor_data = races_winners_df[races_winners_df['Constructor'] == constructor_name]
+            
+            # Count victories
+            victories = len(constructor_data)
+            
+            # Get the most common class for this constructor
+            constructor_class = constructor_data['Class'].value_counts().index[0]
+            
+            # Check championships
+            championships_data = constructors_df[constructors_df['Constructor'] == constructor_name]
+            championships = len(championships_data) if not championships_data.empty else 0
+            
+            result = {
+                "name": constructor_name,
+                "class": constructor_class,
+                "constructor_championships": championships,
+                "victories": victories,
+                "image": f"/constructors/{constructor_name}.png" if os.path.exists(f"public/constructors/{constructor_name}.png") else "/constructors/constructor_default.png"
+            }
+            return result
+    
+    raise HTTPException(status_code=204, detail="Constructor no encontrado")
+
+
 ## UVICORN USAGE
 
 if __name__ == "__main__":
