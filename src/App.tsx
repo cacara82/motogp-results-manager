@@ -6,6 +6,7 @@ import CircuitDetail from './pages/CircuitDetail'
 import PilotDetail from './pages/PilotDetail'
 import NotFound from './pages/NotFound'
 import About from './pages/About'
+import Constructors from './pages/Constructors'
 
 export default function App() {
   return (
@@ -15,8 +16,10 @@ export default function App() {
         <Route path="/about" element={<About/>}/>
         <Route path="/circuits" element={<Circuits/>}/>
         <Route path="/pilots" element={<Pilots/>}/>
+        <Route path="/constructors" element={<Constructors/>}/>
         <Route path="/pilot/:name" element={<PilotDetail />} />
         <Route path="/circuit/:name" element={<CircuitDetail />} />
+        <Route path="/constructor/:name" element={<CircuitDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
