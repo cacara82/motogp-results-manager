@@ -11,7 +11,7 @@ import Footer from "../components/footer.tsx";
 
 interface Constructor {
     name: string;
-    class: string;
+    motClass: string;
     constructor_championships: number;
     victories: number;
     image: string;

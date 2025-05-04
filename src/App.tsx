@@ -7,6 +7,7 @@ import PilotDetail from './pages/PilotDetail'
 import NotFound from './pages/NotFound'
 import About from './pages/About'
 import Constructors from './pages/Constructors'
+import ConstructorDetail from './pages/ConstructorDetail'
 
 export default function App() {
   return (
@@ -19,7 +20,7 @@ export default function App() {
         <Route path="/constructors" element={<Constructors/>}/>
         <Route path="/pilot/:name" element={<PilotDetail />} />
         <Route path="/circuit/:name" element={<CircuitDetail />} />
-        <Route path="/constructor/:name" element={<CircuitDetail />} />
+        <Route path="/constructor/:name/:motClass" element={<ConstructorDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

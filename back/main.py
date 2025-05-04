@@ -214,25 +214,18 @@ def get_circuit_details(name: str):
 def get_top_constructors(limit: int = None):
     """
     Obtains constructors with the most championships and converts them into a dict.
+    Each constructor is separated by class (MotoGP, Moto2, Moto3, etc.)
     If the limit is None, every constructor will be selected.
     """
-    # Get unique constructors from races_winners_df to count their victories
-    constructor_victories = races_winners_df['Constructor'].value_counts().reset_index()
-    constructor_victories.columns = ['Constructor', 'Victories']
+    # Group races by Constructor and Class to get victories per constructor per class
+    constructor_class_victories = races_winners_df.groupby(['Constructor', 'Class']).size().reset_index(name='Victories')
     
-    # Get constructor championships from constructors_df
-    constructor_championships = constructors_df['Constructor'].value_counts().reset_index()
-    constructor_championships.columns = ['Constructor', 'Championships']
+    # Get constructor championships from constructors_df (grouped by Constructor and Class)
+    constructor_championships = constructors_df.groupby(['Constructor', 'Class']).size().reset_index(name='Championships')
     
     # Merge the two dataframes to get both victories and championships
-    merged_df = pd.merge(constructor_victories, constructor_championships, on='Constructor', how='left')
+    merged_df = pd.merge(constructor_class_victories, constructor_championships, on=['Constructor', 'Class'], how='left')
     merged_df['Championships'] = merged_df['Championships'].fillna(0).astype(int)
-    
-    # Get classes for each constructor (taking the most recent or common one)
-    constructor_classes = races_winners_df.groupby('Constructor')['Class'].agg(lambda x: x.value_counts().index[0]).reset_index()
-    
-    # Merge with classes
-    merged_df = pd.merge(merged_df, constructor_classes, on='Constructor', how='left')
     
     # Sort by championships (primary) and victories (secondary)
     merged_df = merged_df.sort_values(by=['Championships', 'Victories'], ascending=False)
@@ -244,10 +237,13 @@ def get_top_constructors(limit: int = None):
     # Rename columns for consistent API response
     result = merged_df.rename(columns={
         'Constructor': 'name',
+        'Class': 'motClass',
         'Championships': 'constructor_championships',
-        'Victories': 'victories',
-        'Class': 'class'
+        'Victories': 'victories'
     })
+    
+    # Create a unique identifier for each constructor-class combination
+    result['id'] = result.apply(lambda x: f"{x['name']}_{x['class'].replace(' ', '_')}", axis=1)
     
     # Add image paths
     result['image'] = result['name'].apply(
@@ -261,30 +257,31 @@ def get_top_constructors(limit: int = None):
     return clean_records
 
 
-@app.get("/api/constructor/{name}")
-def get_constructor_details(name: str):
+@app.get("/api/constructor/{name}/{class_name}")
+def get_constructor_details(name: str, class_name: str):
     """
     Obtains details from a constructor based on
-    their name, including an image path.
+    their name and class, including an image path.
     """
     decoded_name = name.replace("_", " ")
-    print(f"Searching data for the constructor... -> {decoded_name}")
+    decoded_class = class_name.replace("_", " ")
+    print(f"Searching data for the constructor... -> {decoded_name} in class {decoded_class}")
     
-    # Check if constructor exists in races_winners_df
-    constructor_data = races_winners_df[races_winners_df['Constructor'].str.lower() == decoded_name.lower()]
+    # Check if constructor exists in races_winners_df with the specified class
+    constructor_data = races_winners_df[(races_winners_df['Constructor'].str.lower() == decoded_name.lower()) & 
+                                     (races_winners_df['Class'].str.lower() == decoded_class.lower())]
     
     if not constructor_data.empty:
-        # Get the exact constructor name with correct casing
+        # Get the exact constructor name and class with correct casing
         constructor_name = constructor_data['Constructor'].iloc[0]
+        constructor_class = constructor_data['Class'].iloc[0]
         
         # Count victories
         victories = len(constructor_data)
         
-        # Get the most common class for this constructor
-        constructor_class = constructor_data['Class'].value_counts().index[0]
-        
         # Check championships
-        championships_data = constructors_df[constructors_df['Constructor'].str.lower() == decoded_name.lower()]
+        championships_data = constructors_df[(constructors_df['Constructor'].str.lower() == decoded_name.lower()) & 
+                                          (constructors_df['Class'].str.lower() == decoded_class.lower())]
         championships = len(championships_data) if not championships_data.empty else 0
         
         result = {
@@ -292,35 +289,39 @@ def get_constructor_details(name: str):
             "class": constructor_class,
             "constructor_championships": championships,
             "victories": victories,
+            "id": f"{constructor_name}_{constructor_class.replace(' ', '_')}",
             "image": f"/constructors/{constructor_name}.png" if os.path.exists(f"public/constructors/{constructor_name}.png") else "/constructors/constructor_default.png"
         }
         return result
     
-    # If not found by exact match, try partial match
+    # If not found by exact match, try partial match for constructor but exact match for class
     for constructor_name in races_winners_df['Constructor'].unique():
         if decoded_name.lower() in constructor_name.lower():
-            constructor_data = races_winners_df[races_winners_df['Constructor'] == constructor_name]
+            constructor_data = races_winners_df[(races_winners_df['Constructor'] == constructor_name) & 
+                                             (races_winners_df['Class'].str.lower() == decoded_class.lower())]
             
-            # Count victories
-            victories = len(constructor_data)
-            
-            # Get the most common class for this constructor
-            constructor_class = constructor_data['Class'].value_counts().index[0]
-            
-            # Check championships
-            championships_data = constructors_df[constructors_df['Constructor'] == constructor_name]
-            championships = len(championships_data) if not championships_data.empty else 0
-            
-            result = {
-                "name": constructor_name,
-                "class": constructor_class,
-                "constructor_championships": championships,
-                "victories": victories,
-                "image": f"/constructors/{constructor_name}.png" if os.path.exists(f"public/constructors/{constructor_name}.png") else "/constructors/constructor_default.png"
-            }
-            return result
+            if not constructor_data.empty:
+                constructor_class = constructor_data['Class'].iloc[0]
+                
+                # Count victories
+                victories = len(constructor_data)
+                
+                # Check championships
+                championships_data = constructors_df[(constructors_df['Constructor'] == constructor_name) & 
+                                                  (constructors_df['Class'] == constructor_class)]
+                championships = len(championships_data) if not championships_data.empty else 0
+                
+                result = {
+                    "name": constructor_name,
+                    "class": constructor_class,
+                    "constructor_championships": championships,
+                    "victories": victories,
+                    "id": f"{constructor_name}_{constructor_class.replace(' ', '_')}",
+                    "image": f"/constructors/{constructor_name}.png" if os.path.exists(f"public/constructors/{constructor_name}.png") else "/constructors/constructor_default.png"
+                }
+                return result
     
-    raise HTTPException(status_code=204, detail="Constructor no encontrado")
+    raise HTTPException(status_code=204, detail="Constructor no encontrado para la clase especificada")
 
 
 ## UVICORN USAGE
