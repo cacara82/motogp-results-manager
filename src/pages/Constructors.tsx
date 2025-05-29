@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {
   FlagOutlined,
-  HistoryOutlined,
   LoadingOutlined,
   LeftOutlined,
   RightOutlined,
+  TrophyOutlined,
 } from "@ant-design/icons";
 import Navbar from "../components/navbar.tsx";
 import Footer from "../components/footer.tsx";
@@ -15,39 +15,40 @@ interface Constructor {
     constructor_championships: number;
     victories: number;
     image: string;
-  }
+    id: string;
+}
 
 export default function Constructors() {
 
-  // useStates
-  const [circuits, setCircuits] = useState<Constructor[]>([]);
+  // useStates - CORREGIDO: cambiado de circuits a constructors
+  const [constructors, setConstructors] = useState<Constructor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
   // Navigation
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // Ajusta según necesites
+  const itemsPerPage = 6;
   const [totalPages, setTotalPages] = useState(0);
 
-  useEffect(() => { // useEffect to fetch circuits
+  useEffect(() => {
     fetch("https://motogp-results-manager-server.onrender.com/api/constructors")
       .then((res) => (res.ok ? res.json() : Promise.reject("Failed to fetch constructors")))
       .then((data: Constructor[]) => {
-        const circuitData = Array.isArray(data) ? data : [];
-        setCircuits(circuitData);
-        setTotalPages(Math.ceil(circuitData.length / itemsPerPage));
+        const constructorData = Array.isArray(data) ? data : [];
+        setConstructors(constructorData);
+        setTotalPages(Math.ceil(constructorData.length / itemsPerPage));
       })
       .catch(() => setError("Error loading data, please try again later."))
       .finally(() => setLoading(false));
   }, []);
 
-  const getCurrentPageCircuits = () => { // obtain circuits for the current page
+  const getCurrentPageConstructors = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return circuits.slice(startIndex, endIndex);
+    return constructors.slice(startIndex, endIndex);
   };
 
-  const getPageNumbers = () => { // generates navigation numbers
+  const getPageNumbers = () => {
     const visiblePages = 5;
     const pageNumbers = [];
     let startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
@@ -65,7 +66,7 @@ export default function Constructors() {
     return pageNumbers;
   };
 
-  const handlePageChange = (pageNumber: number) => { // handle for page change
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0);
   };
@@ -97,18 +98,41 @@ export default function Constructors() {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {getCurrentPageCircuits().map((circuit, index) => (
-                  <a key={index} href={`/constructor/${circuit.name.replace(/ /g, "_")}`} className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-lg overflow-hidden border-t-4 border-emerald-600">
-                    <div className="flex flex-row">
-                      <div className="card-body p-4 flex-1">
-                        <h4 className="text-xl font-semibold mb-2 text-gray-800">{circuit.name}</h4>
-                        <img src={circuit.image} alt="image" height={125} width={125}></img>
-                        <p className="text-gray-600 flex items-center">
-                          <FlagOutlined className="mr-2 text-blue-500" /> {circuit.constructor_championships}
-                        </p>
-                        <p className="text-gray-600 flex items-center mt-1">
-                          <HistoryOutlined className="mr-2 text-red-500" /> {circuit.victories} GPs Held
-                        </p>
+                {getCurrentPageConstructors().map((constructor, index) => (
+                  <a 
+                    key={index} 
+                    href={`/constructor/${constructor.name.replace(/ /g, "_")}/${constructor.motClass.replace(/ /g, "_")}`} 
+                    className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-lg overflow-hidden border-t-4 border-emerald-600"
+                  >
+                    <div className="flex flex-col">
+                      <div className="card-body p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-xl font-semibold text-gray-800">{constructor.name}</h4>
+                          <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                            {constructor.motClass}
+                          </span>
+                        </div>
+                        
+                        <div className="flex justify-center mb-4">
+                          <img 
+                            src={constructor.image} 
+                            alt={`${constructor.name} logo`} 
+                            className="h-24 w-24 object-contain"
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <p className="text-gray-600 flex items-center">
+                            <TrophyOutlined className="mr-2 text-amber-500" /> 
+                            <span className="font-medium">{constructor.constructor_championships}</span>
+                            <span className="ml-1 text-sm">Championships</span>
+                          </p>
+                          <p className="text-gray-600 flex items-center">
+                            <FlagOutlined className="mr-2 text-green-500" /> 
+                            <span className="font-medium">{constructor.victories}</span>
+                            <span className="ml-1 text-sm">Victories</span>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </a>

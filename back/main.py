@@ -243,7 +243,7 @@ def get_top_constructors(limit: int = None):
     })
     
     # Create a unique identifier for each constructor-class combination
-    result['id'] = result.apply(lambda x: f"{x['name']}_{x['class'].replace(' ', '_')}", axis=1)
+    result['id'] = result.apply(lambda x: f"{x['name']}_{x['motClass'].replace(' ', '_')}", axis=1)
     
     # Add image paths
     result['image'] = result['name'].apply(
