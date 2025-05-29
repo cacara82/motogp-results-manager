@@ -25,11 +25,12 @@ interface Circuit { // interface for Circuits
 }
 
 interface Constructor {
-  name: string;
-  class: string;
-  constructor_championships: number;
-  victories: number;
-  image: string;
+    name: string;
+    motClass: string;
+    constructor_championships: number;
+    victories: number;
+    image: string;
+    id: string;
 }
 
 export default function Home() {
@@ -48,7 +49,7 @@ export default function Home() {
       fetch("https://motogp-results-manager-server.onrender.com/api/circuits?limit=3")
         .then((res) => res.ok ? res.json() : Promise.reject("Failed to fetch circuits"))
         .then((data: Circuit[]) => setCircuits(Array.isArray(data) ? data : [])),
-      fetch("https://motogp-results-manager-server.onrender.com/api/constructors?limit=5")
+      fetch("https://motogp-results-manager-server.onrender.com/api/constructors?limit=6")
         .then((res) => res.ok ? res.json() : Promise.reject("Failed to fetch constructors"))
         .then((data: Constructor[]) => setConstructors(Array.isArray(data) ? data : []))
     ])
@@ -131,11 +132,15 @@ export default function Home() {
             <h3 className="text-2xl font-bold mt-8 mb-4">Top Constructors</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {constructors.map((constructor, index) => (
-                <a key={index} href={`/constructor/${constructor.name.replace(/ /g, "_")}`} className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 border-emerald-600">
+                <a key={index} href={`/constructor/${constructor.name.replace(/ /g, "_")}/${constructor.motClass}`} className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 border-emerald-600">
                   <div className="flex flex-row">
                     <div className="card-body p-4 flex-1">
-                      <h4 className="text-xl font-semibold mb-2">{constructor.name}</h4>
-                      <img src={constructor.image} alt="image" height={150} width={150}></img>
+                      <h4 className="text-xl font-semibold mb-2">{constructor.name}
+                        <span className="bg-emerald-100 text-emerald-800 text-xs ms-3 font-medium px-2.5 py-0.5 rounded">
+                            {constructor.motClass}
+                        </span>
+                      </h4>
+                      <img src={constructor.image} alt="image" height={100} width={100}></img>
                       <p className="text-gray-500">
                         <FlagOutlined className="mr-1" /> {constructor.constructor_championships} Constructor Championships
                       </p>
@@ -144,7 +149,7 @@ export default function Home() {
                 </a>
               ))}
             </div>
-            <div className="flex justify-center pt-8 pb-4">
+            <div className="flex justify-center pt-8 pb-8">
                 <a href="/constructors" className="px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:opacity-90 hover:scale-105 transition-all duration-300 text-white font-medium rounded-full shadow-lg">
                   See all constructors
                 </a>

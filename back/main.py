@@ -247,7 +247,7 @@ def get_top_constructors(limit: int = None):
     
     # Add image paths
     result['image'] = result['name'].apply(
-        lambda x: f"/constructors/{x}.png" if os.path.exists(f"public/constructors/{x}.png") else "/constructors/constructor_default.png"
+        lambda x: f"/constructors/{x}.png" if os.path.exists(f"/constructors/{x}.png") else "/constructors/constructor_default.png"
     )
     
     # Convert to dict and clean NaN values

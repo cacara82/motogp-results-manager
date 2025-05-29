@@ -82,9 +82,14 @@ export default function Circuits() {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold text-gray-800">All Circuits</h1>
-            <a href="/pilots" className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
-              Switch to riders
-            </a>
+            <div className="flex gap-3">
+              <a href="/pilots" className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
+                Switch to riders
+              </a>
+              <a href="/constructors" className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
+                Switch to constructors
+              </a>
+            </div>
           </div>
 
           {loading ? (
@@ -95,7 +100,7 @@ export default function Circuits() {
             <div className="text-center text-red-600 font-bold text-lg">{error}</div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="pt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {getCurrentPageCircuits().map((circuit, index) => (
                   <a key={index} href={`/circuit/${circuit.name.replace(/ /g, "_")}`} className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-lg overflow-hidden border-t-4 border-indigo-600">
                     <div className="flex flex-row">

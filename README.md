@@ -1,50 +1,50 @@
-# React + TypeScript + Vite
+# 🏍️ MotoGP Results Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**MotoGP Results Manager** is an open data web application that began as a personal project to practice web development skills in different languages. Over time, it evolved into a fully-fledged platform with a main goal: to build a comprehensive and well-structured data hub for motorcycle racing competitions with a focus on:
 
-Currently, two official plugins are available:
+> 📊 Easy access to structured data by rider, track, or constructor.
+> 🔄 Updates every once in a while focused on adding more functionalities.
+> 🛠️ Open for community contributions and suggestions, specially by its potential users and/or audience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🌐 Technologies, languages and data sources
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**MRM** information is based on a [KaggleHub dataset](https://www.kaggle.com/datasets/alrizacelk/moto-gp-world-championship19492022) by **ALİ RIZA CELİK**. It is built using React + Vite for the front-end and Python + FastAPI for the back-end.
 
-- Configure the top-level `parserOptions` property like this:
+> [!IMPORTANT]
+> **ALİ RIZA CELİK**'s dataset contains static data, so, by consequence, the app shares its same potential limitations (like data being not updated to the current date and/or season, for example).
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🧪 Features
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+* Rider data: nº of victories, 2nd places, 3rd places, poles and world championships + images
+* Track data: location and nº of events held + images
+* Constructor data: class, nº of constructor championships and victories + images
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+---
+
+## 🚀 Deployment and access
+
+The app is currently deployed in Vercel for the client-side and Render for the server-side. There are no plans, at least currently, to shift the deployment as its a project created purely for fun and educational purposes. You can access via your web browser of choice in:
+
+> http://motogp-results-manager.vercel.app/
+
+---
+
+## 🔮 Roadmap / Upcoming Features or Goals 
+
+* [ ] MRM-ELO System for Riders, to classify them by their career results and performance
+* [ ] Update ALİ RIZA CELİK's dataset to hold more up-to-date data
+
+---
+
+## 🤝 Credits
+
+Original idea and development by **Carlos Carvajal (@cacara82)**.
+
+---
+
+**Thanks for checking out MotoGP Results Manager!**
+If you like the project or are interested in its development, give it a ⭐ and share it!

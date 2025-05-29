@@ -20,7 +20,7 @@ interface Constructor {
 
 export default function Constructors() {
 
-  // useStates - CORREGIDO: cambiado de circuits a constructors
+  // useStates
   const [constructors, setConstructors] = useState<Constructor[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -83,10 +83,15 @@ export default function Constructors() {
       <div className="p-6 flex-grow">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">All Constructors</h1>
-            <a href="/pilots" className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
-              Switch to riders
-            </a>
+            <h1 className="text-3xl font-bold text-gray-800">All Circuits</h1>
+            <div className="flex gap-3">
+              <a href="/pilots" className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
+                Switch to riders
+              </a>
+              <a href="/circuits" className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
+                Switch to tracks
+              </a>
+            </div>
           </div>
 
           {loading ? (
@@ -97,7 +102,7 @@ export default function Constructors() {
             <div className="text-center text-red-600 font-bold text-lg">{error}</div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="pt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {getCurrentPageConstructors().map((constructor, index) => (
                   <a 
                     key={index} 
@@ -108,12 +113,12 @@ export default function Constructors() {
                       <div className="card-body p-4">
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="text-xl font-semibold text-gray-800">{constructor.name}</h4>
-                          <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                          <span className="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded">
                             {constructor.motClass}
                           </span>
                         </div>
                         
-                        <div className="flex justify-center mb-4">
+                        <div className="mt-4 mb-4">
                           <img 
                             src={constructor.image} 
                             alt={`${constructor.name} logo`} 

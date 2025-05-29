@@ -81,10 +81,15 @@ export default function Pilots() {
       <div className="p-6 flex-grow">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">All Riders</h1>
-            <a href="/circuits" className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
-              Switch to tracks
-            </a>
+            <h1 className="text-3xl font-bold text-gray-800">All Circuits</h1>
+            <div className="flex gap-3">
+              <a href="/circuits" className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
+                Switch to tracks
+              </a>
+              <a href="/constructors" className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
+                Switch to constructors
+              </a>
+            </div>
           </div>
 
           {loading ? (
@@ -95,7 +100,7 @@ export default function Pilots() {
             <div className="text-center text-red-600 font-bold text-lg">{error}</div>
           ) : (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="pt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {getCurrentPageRiders().map((rider, index) => (
                   <a key={index} href={`/pilot/${rider.name.replace(/ /g, "_")}`} className="card bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 rounded-lg overflow-hidden border-t-4 border-blue-600">
                     <div className="card-body p-4">

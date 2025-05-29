@@ -59,7 +59,7 @@ export default function ConstructorDetail() {
             <a href="/constructors" className="px-4 py-2 bg-gray-200 hover:bg-gray-300 transition-all duration-300 text-gray-800 font-medium rounded-lg shadow-md flex items-center">
               ← Back to Constructors
             </a>
-            <a href="/" className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
+            <a href="/" className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:opacity-90 transition-all duration-300 text-white font-medium rounded-lg shadow-md">
               Home
             </a>
           </div>
@@ -78,17 +78,17 @@ export default function ConstructorDetail() {
                 <img 
                   src={constructor.image} 
                   alt={constructor.name} 
-                  className="w-48 h-48 object-contain border-4 border-red-500 rounded-lg mb-4 md:mb-0"
+                  className="w-48 h-48 object-contain border-4 border-emerald-500 mb-4 md:mb-0"
                 />
                 <div className="text-center md:text-left">
-                  <h1 className="text-3xl font-bold text-gray-800">{constructor.name}</h1>
-                  <div className="mt-2 flex justify-center md:justify-start items-center">
-                    <span className="bg-blue-100 text-blue-800 text-lg font-medium px-3 py-1 rounded-full">
+                  <h1 className="text-3xl font-bold text-gray-800">
+                    {constructor.name} 
+                    <span className="bg-blue-100 text-blue-800 text-lg ms-4 font-medium px-3 py-1 rounded-full">
                       {constructor.class}
                     </span>
-                  </div>
+                  </h1>
                   <div className="text-gray-600 mt-2 italic">
-                    Professional MotoGP Constructor
+                    Motocycling Constructor
                   </div>
                 </div>
               </div>
@@ -96,9 +96,9 @@ export default function ConstructorDetail() {
               {/* Statistics Card */}
               <div className="bg-white rounded-lg shadow-xl p-6">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2 border-red-200">
-                  Statistics in {constructor.class}
+                  Statistics
                 </h2>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-5">
                   <div className="space-y-4">
                     <div className="flex items-center">
                       <TrophyOutlined className="text-3xl text-amber-500 mr-4" />
@@ -121,19 +121,17 @@ export default function ConstructorDetail() {
               </div>
 
               {/* Additional Info Card */}
-              <div className="bg-white rounded-lg shadow-xl p-6">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2 border-red-200">
-                  Class Information
-                </h2>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-gray-700">
-                    <span className="font-semibold">{constructor.name}</span> has competed in the{" "}
-                    <span className="font-semibold text-blue-600">{constructor.class}</span> category, 
-                    achieving <span className="font-semibold text-amber-600">{constructor.constructor_championships}</span> constructor championship{constructor.constructor_championships !== 1 ? 's' : ''} 
-                    and <span className="font-semibold text-green-600">{constructor.victories}</span> race victor{constructor.victories !== 1 ? 'ies' : 'y'}.
-                  </p>
+              {constructor.victories > 50 && constructor.constructor_championships > 0 && (
+                <div className="bg-white rounded-lg shadow-xl p-6 mb-6">
+                  <div className="p-4 bg-emerald-50 border-t-4 border-emerald-600 text-emerald-700 rounded-lg shadow">
+                    <p>
+                        <strong>{constructor.name}</strong> is one of the top <strong>{constructor.class}</strong> constructors in the history of the category. 
+                        It holds <strong>{constructor.constructor_championships}</strong> Constructor Championship/s and <strong>{constructor.victories}</strong> victories
+                        registered as of today.
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
 
             </div>
           ) : (
