@@ -290,7 +290,7 @@ def get_constructor_details(name: str, class_name: str):
             "constructor_championships": championships,
             "victories": victories,
             "id": f"{constructor_name}_{constructor_class.replace(' ', '_')}",
-            "image": f"/constructors/{constructor_name}.png" if os.path.exists(f"/constructors/{constructor_name}.png") else "/constructors/constructor_default.png"
+            "image": f"constructors/{constructor_name}.png" if os.path.exists(f"constructors/{constructor_name}.png") else "constructors/constructor_default.png"
         }
         return result
     
@@ -317,7 +317,7 @@ def get_constructor_details(name: str, class_name: str):
                     "constructor_championships": championships,
                     "victories": victories,
                     "id": f"{constructor_name}_{constructor_class.replace(' ', '_')}",
-                    "image": f"/constructors/{constructor_name}.png" if os.path.exists(f"/constructors/{constructor_name}.png") else "/constructors/constructor_default.png"
+                    "image": f"constructors/{constructor_name}.png" if os.path.exists(f"constructors/{constructor_name}.png") else "constructors/constructor_default.png"
                 }
                 return result
     
